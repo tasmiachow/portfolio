@@ -19,7 +19,7 @@ const el = {
   cueIcon: document.querySelector(".scroll-cue__gems"),
 };
 
-const ROLE_HOLD = 1.5; // seconds each role stays on screen
+const ROLE_HOLD = 1; // seconds each role stays on screen
 
 // Software Engineer -> Product Builder -> Full Stack Developer -> repeat
 function startRoleLoop() {
@@ -46,7 +46,7 @@ intro
   .fromTo(el.stage, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
   .fromTo(el.role, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.5)
   .add(startRoleLoop, 1.1)
-  .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 1.3);
+  .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 2.2);
 
 // Any scroll / tap / key press jumps the intro to its end.
 const skipEvents = ["wheel", "touchstart", "keydown", "pointerdown"];
@@ -132,9 +132,90 @@ photo.onload = () => {
 
     .to("#headshot", { opacity: 0, duration: 0.5 })
     .to("#spritesheet", { opacity: 1, duration: 0.5 }, "<")
+
+    //two frames were the character has no mouth
+    .to("#spritesheet", {
+      backgroundPositionX: "15.385%",
+      ease: "steps(2)",
+      duration: 0.3,
+    })
+
+    // bubble and sprite blowing
+    .to("#spritesheet", {
+      backgroundPositionX: "84.615%",
+      ease: "steps(9)",
+      duration: 6,
+    })
+    .to(
+      "#bubble",
+      {
+        opacity: 1,
+        duration: 0.1,
+      },
+      "<+=0.667",
+    )
+    .fromTo(
+      "#bubble",
+      { scale: 0.1 },
+      { scale: 1, transformOrigin: "48% 70%", ease: "none", duration: 6 },
+      "<",
+    )
+
+    // bubble pop
+    .to("#bubble", {
+      opacity: 0,
+    })
+    .to(
+      "#pop",
+      {
+        opacity: 1,
+        duration: 0.5,
+      },
+      "<",
+    )
+    .to(
+      "#spritesheet",
+      {
+        backgroundPositionX: "100%",
+        ease: "steps(2)",
+        duration: 3,
+      },
+      "<",
+    )
+    .fromTo(
+      "#pop",
+      { scale: 1.5 },
+      { scale: 1, transformOrigin: "50% 50%", ease: "power3.out", duration: 3 },
+      "<",
+    )
     
 
-    // 3) TODO (yours): step the sprite frames + grow the bubble
+    //pop disappears
+
+    .to("#pop", { opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.6")
+    
+    //stars appear 
+    .fromTo(".star", 
+      { scale:0, opacity:0 }, 
+      { scale:1, opacity:1, 
+        ease: "back.out(2)",
+        duration: 0.3,
+        stagger:0.1
+      },
+      "-=0.3"
+    )
+
+    // stars fall 
+    .to(".star", {
+      y:"300%",
+      rotation: (i) => i % 2 ? 180 : -180,
+      opacity:0, 
+      ease:"power1.in", 
+      duration: 2,
+      stagger:0.1
+    })
+
+
 
     // 4) scroll arrow: keep this LAST
     .fromTo(el.scrollCue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
