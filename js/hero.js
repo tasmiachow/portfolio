@@ -1,119 +1,143 @@
 /* ==========================================================================
-   Hero intro
-   Sequence: portrait rises -> role fades in and starts cycling
-   -> scroll arrow appears and bobs
+   Hero
+   1. Intro (plays on load): portrait rises -> role fades in and cycles -> cue appears
+   2. Scroll (pinned):      headshot pixelates -> swaps to the sprite -> scroll arrow appears
    ========================================================================== */
-(() => {
-  // If GSAP didn't load, drop the "hidden until animated" gate so the page still shows.
-  if (!window.gsap) {
-    document.documentElement.classList.remove('js');
-    return;
-  }
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
 
-  const $ = (sel) => document.querySelector(sel);
-  const el = {
-    photo: $('.photo'),
-    role: $('.role'),
-    faces: [...document.querySelectorAll('.role__face')],
-    cue: $('.scroll-cue'),
-    cueIcon: $('.scroll-cue__gems'),
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- 1. Intro ---------- */
+
+const el = {
+  stage: document.querySelector(".stage"),
+  role: document.querySelector(".role"),
+  faces: [...document.querySelectorAll(".role__face")],
+  cue: document.querySelector("#user__cue"),
+  scrollCue: document.querySelector(".scroll-cue"),
+  cueIcon: document.querySelector(".scroll-cue__gems"),
+};
+
+const ROLE_HOLD = 1.5; // seconds each role stays on screen
+
+// Software Engineer -> Product Builder -> Full Stack Developer -> repeat
+function startRoleLoop() {
+  if (reduceMotion) return;
+
+  let i = 0;
+  const flip = () => {
+    const current = el.faces[i];
+    i = (i + 1) % el.faces.length;
+    const next = el.faces[i];
+
+    gsap
+      .timeline({ onComplete: () => gsap.delayedCall(ROLE_HOLD, flip) })
+      .to(current, { rotateX: -90, duration: 0.4, ease: "power2.in" })
+      .fromTo(next, { rotateX: 90 }, { rotateX: 0, duration: 0.5, ease: "power2.out" });
   };
 
-  const ROLE_HOLD = 1.5; // seconds each phrase stays on screen
+  gsap.delayedCall(ROLE_HOLD, flip);
+}
 
-  // Cycles Software Engineer -> Product Builder -> Full Stack Developer -> repeat
-  function startRoleLoop() {
-    if (reduceMotion) return;
+const intro = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
 
-    const faces = el.faces;
-    let i = 0;
+intro
+  .fromTo(el.stage, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
+  .fromTo(el.role, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.5)
+  .add(startRoleLoop, 1.1)
+  .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 1.3);
 
-    const flip = () => {
-      const current = faces[i];
-      i = (i + 1) % faces.length;
-      const next = faces[i];
+// Any scroll / tap / key press jumps the intro to its end.
+const skipEvents = ["wheel", "touchstart", "keydown", "pointerdown"];
 
-      gsap.timeline({ onComplete: () => gsap.delayedCall(ROLE_HOLD, flip) })
-        .to(current, { rotateX: -90, duration: 0.4, ease: 'power2.in' })
-        .fromTo(next, { rotateX: 90 }, { rotateX: 0, duration: 0.5, ease: 'power2.out' });
-    };
+function skipIntro() {
+  intro.progress(1, false);
+  skipEvents.forEach((e) => window.removeEventListener(e, skipIntro));
+}
 
-    gsap.delayedCall(ROLE_HOLD, flip);
-  }
+if (reduceMotion) {
+  intro.progress(1, false);
+} else {
+  skipEvents.forEach((e) => window.addEventListener(e, skipIntro, { passive: true }));
+  intro.play();
+}
 
-  function buildTimeline() {
-    const tl = gsap.timeline({
-      paused: true,
-      defaults: { ease: 'power2.out' },
-      onComplete: onIntroComplete,
-    });
+/* ---------- 2. Pixelate on scroll ---------- */
 
-    // 1. Portrait rises in
-    tl.fromTo(el.photo,
-      { autoAlpha: 0, y: 50 },
-      { autoAlpha: 1, y: 0, duration: 0.9 },
-      0);
+const canvas = document.getElementById("headshot");
+const ctx = canvas.getContext("2d");
+const SIZE = 800;
+const BLOCKS = [1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100]; // all divide 800
+const MAX_BLOCK = 100;
 
-    // 2. Role fades in, then the flip cycle starts
-    tl.fromTo(el.role,
-      { autoAlpha: 0, y: 16 },
-      { autoAlpha: 1, y: 0, duration: 0.6 },
-      0.5);
-    tl.add(startRoleLoop, 1.1);
+const photo = new Image();
+const off = document.createElement("canvas"); // tiny offscreen canvas
+const octx = off.getContext("2d");
 
-    // 3. Arrow appears (bob starts in onIntroComplete)
-    tl.fromTo(el.cue,
-      { autoAlpha: 0, y: -14 },
-      { autoAlpha: 1, y: 0, duration: 0.7 },
-      1.3);
+// Pick the allowed block size closest to b (compared on a log scale)
+function snap(b) {
+  return BLOCKS.reduce((best, v) =>
+    Math.abs(Math.log(v) - Math.log(b)) < Math.abs(Math.log(best) - Math.log(b)) ? v : best,
+  );
+}
 
-    return tl;
-  }
+function drawPixelated(block) {
+  const cells = SIZE / block;
+  off.width = off.height = cells;
+  octx.imageSmoothingEnabled = true;
+  octx.drawImage(photo, 0, 0, cells, cells); // shrink
+  ctx.imageSmoothingEnabled = false;
+  ctx.clearRect(0, 0, SIZE, SIZE);
+  ctx.drawImage(off, 0, 0, cells, cells, 0, 0, SIZE, SIZE); // blow back up
+}
 
-  function onIntroComplete() {
-    removeSkipListeners();
-    if (reduceMotion) return;
+photo.onload = () => {
+  drawPixelated(1);
 
-    gsap.to(el.cueIcon, {
-      y: 10,
-      duration: 0.9,
-      ease: 'sine.inOut',
-      repeat: -1,
-      yoyo: true,
-    });
-  }
+  const state = { p: 0 }; // progress 0 -> 1, the tween animates this number
 
-  // Skip: any scroll / tap / key press jumps straight to the finished state.
-  const skipEvents = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
-  let tl;
+  // arrow bob: paused until the scroll reaches the very end
+  const bob = gsap.to(el.cueIcon, {
+    y: 10,
+    duration: 0.9,
+    ease: "sine.inOut",
+    repeat: -1,
+    yoyo: true,
+    paused: true,
+  });
 
-  function skipIntro() {
-    if (tl && tl.progress() < 1) tl.progress(1, false);
-    removeSkipListeners();
-  }
-  function removeSkipListeners() {
-    skipEvents.forEach((e) => window.removeEventListener(e, skipIntro));
-  }
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: ".sprite",
+        start: "top top",
+        end: "+=3000",
+        pin: true,
+        scrub: true,
+        markers: true,
+        onUpdate: (self) => (self.progress === 1 ? bob.play() : bob.pause()),
+      },
+    })
+    // 1) pixelate
+    .to(state, {
+      p: 1,
+      ease: "none",
+      duration: 4,
+      onUpdate: () => drawPixelated(snap(Math.exp(Math.log(MAX_BLOCK) * state.p))),
+    })
+    .to(el.cue, { autoAlpha: 0, duration: 1, ease: "power2.out" }, "<")
 
-  async function init() {
-    // Wait for web fonts so nothing reflows mid-animation (1.5s cap).
-    await Promise.race([
-      document.fonts.ready,
-      new Promise((resolve) => setTimeout(resolve, 1500)),
-    ]);
+    // 2) swap to the sprite
 
-    tl = buildTimeline();
+    .to("#headshot", { opacity: 0, duration: 0.5 })
+    .to("#spritesheet", { opacity: 1, duration: 0.5 }, "<")
+    
 
-    if (reduceMotion) {
-      tl.progress(1, false);
-      return;
-    }
+    // 3) TODO (yours): step the sprite frames + grow the bubble
 
-    skipEvents.forEach((e) => window.addEventListener(e, skipIntro, { passive: true }));
-    tl.play();
-  }
+    // 4) scroll arrow: keep this LAST
+    .fromTo(el.scrollCue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
+};
 
-  init();
-})();
+photo.src = "./images/headshot.png"; // set last, after onload is attached

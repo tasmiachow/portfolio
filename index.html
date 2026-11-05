@@ -7,7 +7,10 @@
 
   <!-- Gates the "hidden until animated" CSS. If GSAP fails to load, hero.js removes it. -->
   <script>document.documentElement.classList.add('js');</script>
-
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+  <script defer src="js/hero.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist+Pixel&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -17,36 +20,35 @@
 <body>
 
 
-  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
-    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
-
   <header class="hero" id="top">
-    <div class="hero__glow" aria-hidden="true"></div>
-    <!-- Greeting  -->
-  <div class="greeting-wrap">
-  <h1 class="greeting">
-    <span class="greeting__hi">Hi I’m</span>
-    <span class="greeting__name">Tasmia</span>
-  </h1>
-</div>
-
+    
+    <div id="title"> 
+      
+      <h2 class="greeting__style"> Tasmia Chowdhury </h2>
+    
     <!-- Role: flips from the front face to the back face -->
-    <p class="role">
-      <span class="role__face">Software Engineer</span>
-      <span class="role__face">Product Builder</span>
-      <span class="role__face">Full Stack Developer</span>
-    </p>
+      <p class="role">
+        <span class="role__face greeting__style">Software Engineer</span>
+        <span class="role__face greeting__style">Product Builder</span>
+        <span class="role__face greeting__style">Full Stack Developer</span>
+      </p>
 
-    <!-- Portrait -->
-    <div class="portrait">
-     
-      <!--  -->
-      <img class="photo" src="images/Portrait-1.png" alt="Portrait of Tasmia" width="800" height="1000">
     </div>
+    
+    
+    <div class="sprite">
+      <div class="stage">
+        <canvas id="headshot" width="800" height="800"></canvas>
+        <div id="spritesheet" aria-hidden="true"></div>
+        <img id="bubble" src="./images/bubbleGum.svg" alt="blown bubblegum" aria-hidden="true">
+        <img id="pop" src="./images/pop.svg" alt="bubble pop" aria-hidden="true"> 
+      </div>
+      <p id="user__cue">scroll to start</p>
+    </div>
+    
+    
+
+    
 
     <!-- Scroll cue: appears after the intro, real link so it works without JS -->
    <a class="scroll-cue" href="#about" aria-label="Scroll down to About">
@@ -69,14 +71,9 @@
   <!-- About Section -->
   <main>
   <section id="about" class="about">
-    <h2 class="section__title">About Me</h2>
+    <h1 class="section__title">About Me</h1>
 
-    <div class="about__wrapper">
-      <div class="about__portrait">
-        <video autoplay loop muted playsinline aria-hidden="true">
-          <source src="./images/portrait.webm" type="video/webm">
-        </video>
-      </div>
+   
 
       <div class="textbox">
         <p>Hey there! I’m passionate about making tech accessible! 
@@ -93,13 +90,28 @@
 <!-- Experience -->
 
 <section id = "experience" class="experience">
-  <h2 class="section__title"> Experience </h2>
+  <h1 class="section__title"> Experience </h1>
 
-  <div class="layout-container">
-  <div class="box large-square">1</div>
-  <div class="box small-square">2</div>
-  <div class="box small-square">3</div>
-  <div class="box small-square">4</div>
+
+<div class = exp__wrapper>
+  <div class="layout__container">
+      <div class="box large-square glass-card" ><img src="./images/dgi.png"/></div>
+      <div class="box small-square glass-card"><img src="./images/barclays.png"/> </div>
+      <div class="box small-square glass-card"><img src="./images/google.png"/> </div>
+      <div class="box small-square glass-card"><img src="./images/ctp-logo.png" /> </div>
+      <div class="box small-square glass-card"><img src="./images/heroImage.png" /> </div>
+  </div>
+
+<div class="textbox">
+
+  <p class="digital-girl"> Digital Girl Inc. </p>
+  <p class="barclays"> barclays</p>
+  <p class="google"> Google</p>  
+  <p class="ctp"> Cuny Tech Prep</p>
+  <p class="halcyon">Halcyon</p>
+
+</div>
+
 </div>
 
 
@@ -110,7 +122,7 @@
 
 <!--Projects-->
 <section id = "projects" class = "projects"> 
-    <h2 class="section__title"> Projects</h2>
+    <h1 class="section__title"> Projects</h1>
 
 
 
@@ -123,8 +135,6 @@
 </section>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
-  <script src="js/hero.js"></script>
+ 
 </body>
 </html>
