@@ -46,7 +46,7 @@ intro
   .fromTo(el.stage, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
   .fromTo(el.role, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.5)
   .add(startRoleLoop, 1.1)
-  .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 2.2);
+  .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 1.3);
 
 // Any scroll / tap / key press jumps the intro to its end.
 const skipEvents = ["wheel", "touchstart", "keydown", "pointerdown"];
@@ -111,7 +111,7 @@ photo.onload = () => {
     .timeline({
       scrollTrigger: {
         trigger: ".sprite",
-        start: "top top",
+        start: "top 10%",
         end: "+=3000",
         pin: true,
         scrub: true,
@@ -173,33 +173,37 @@ photo.onload = () => {
       },
       "<",
     )
+    .to(":root",
+    { "--bg": "#F6F2FF", "--text": "#1B1033", duration: 2, ease: "none" },
+    "<",
+    )
     .to(
       "#spritesheet",
       {
         backgroundPositionX: "100%",
         ease: "steps(2)",
-        duration: 3,
+        duration: 2,
       },
       "<",
     )
     .fromTo(
       "#pop",
       { scale: 1.5 },
-      { scale: 1, transformOrigin: "50% 50%", ease: "power3.out", duration: 3 },
+      { scale: 1, transformOrigin: "50% 50%", ease: "power3.out", duration: 2 },
       "<",
     )
     
 
     //pop disappears
 
-    .to("#pop", { opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.6")
+    .to("#pop", { opacity: 0,  ease: "power2.out" }, "-=0.6")
     
     //stars appear 
     .fromTo(".star", 
       { scale:0, opacity:0 }, 
       { scale:1, opacity:1, 
         ease: "back.out(2)",
-        duration: 0.3,
+        duration: 0.5,
         stagger:0.1
       },
       "-=0.3"
@@ -207,14 +211,13 @@ photo.onload = () => {
 
     // stars fall 
     .to(".star", {
-      y:"300%",
+      y: "120vh",
       rotation: (i) => i % 2 ? 180 : -180,
-      opacity:0, 
+      // opacity:0, 
       ease:"power1.in", 
-      duration: 2,
+      duration: 3,
       stagger:0.1
     })
-
 
 
     // 4) scroll arrow: keep this LAST
