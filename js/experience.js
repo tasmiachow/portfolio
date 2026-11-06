@@ -10,6 +10,8 @@ const expEl = {
   flowerRider: document.querySelector("#flowerRider"),
   cards: [...document.querySelectorAll(".exp-card")],
   leaves: [...document.querySelectorAll('[id^="leaf_"]')],
+  petals: document.querySelector("#petals"),
+  resumeBtn: document.querySelector(".resume-btn")
 };
 
 // vars
@@ -34,11 +36,12 @@ const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 const smooth = (k) => k * k * (3 - 2 * k);
 
 const leafStart = [0.06, 0.12, 0.33, 0.54, 0.86, 0.95]; // from my table
-const cardStart = [0.12, 0.33, 0.54, 0.86];
+const cardStart = [0.06, 0.12, 0.33, 0.54, 0.86];
 
 function render(p) {
   // 1) draw the vine
   gsap.set(expEl.vine, { drawSVG: `0% ${p * 100}%` });
+  // gsap.set(expEl.petals, { rotation: `${p*1440}`, transformOrigin: "50% 50%" })
 
   // 2) flower
   const pt = expEl.vine.getPointAtLength(p * vineLength);
@@ -59,6 +62,8 @@ function render(p) {
     const k = smooth(clamp((p - cardStart[i]) / 0.03, 0, 1));
     gsap.set(card, { autoAlpha: k, y: (1 - k) * 24 });
   });
+  const kb = smooth(clamp((p - 0.96) / 0.03, 0, 1));
+  gsap.set(expEl.resumeBtn, { autoAlpha: kb, y: (1 - kb) * 20 });
 }
 render(0);
 

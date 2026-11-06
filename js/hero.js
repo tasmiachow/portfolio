@@ -215,6 +215,12 @@ photo.onload = () => {
 
     // 4) scroll arrow: keep this LAST
     .fromTo(el.scrollCue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
+
+  // This pin is created after experience.js already measured its start position,
+  // so re-order the triggers by page position and recalculate them now that the
+  // hero's +3000px pin spacer exists.
+  ScrollTrigger.sort();
+  ScrollTrigger.refresh();
 };
 
 photo.src = "./images/headshot.png"; // set last, after onload is attached

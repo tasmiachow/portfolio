@@ -79,7 +79,7 @@ img {
 /* ==========================================================================
   Global Styles 
   ==========================================================================*/
-  .section__title {
+.section__title {
   position: relative;
   z-index: 1;
   padding-left: var(--text-inset); /* lines up with the hero greeting */
@@ -129,7 +129,6 @@ img {
     rgba(255, 255, 255, 0.3)
   );
 }
-
 
 /* ==========================================================================
    Hero
@@ -340,6 +339,98 @@ img {
   transform: rotateX(90deg);
 }
 
+/*=======================================================================
+    About Section 
+  ====================================================================== */
+  /* ---- About (bubbles) ---- */
+.about__stage {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(2rem, 6vh, 4rem) var(--gutter) 6rem;
+  overflow: hidden;
+  background:
+    radial-gradient(620px 520px at 22% 24%, rgba(160, 120, 255, 0.78), transparent 70%),
+    radial-gradient(560px 460px at 52% 82%, rgba(255, 110, 195, 0.62), transparent 70%),
+    radial-gradient(620px 520px at 82% 24%, rgba(130, 110, 255, 0.62), transparent 70%),
+    radial-gradient(460px 360px at 70% 78%, rgba(190, 255, 215, 0.95), transparent 70%),
+    var(--cream);
+}
+
+/* 2x2 grid of cards, reserved space from the start */
+.about__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 520px));
+  gap: 40px;
+  justify-content: center;
+  margin-top: clamp(2rem, 6vh, 4rem);
+}
+.about-card {
+  min-height: 210px;
+  padding: 28px 32px;
+  border-radius: 24px;
+  opacity: 0;
+  visibility: hidden;          /* GSAP reveals with autoAlpha */
+}
+.about-card.glass-card { background: rgba(255, 255, 255, 0.55); }
+.about-card p { margin: 0; font-size: 1.15rem; line-height: 1.5; }
+
+/* bubbles */
+.bubble {
+  position: absolute;
+  z-index: 3;
+  left: calc(var(--x) - var(--size) / 2);   /* no CSS transform, GSAP owns it */
+  top: calc(var(--y) - var(--size) * 0.48);
+  width: var(--size);
+  aspect-ratio: 1 / 0.96;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+}
+.bubble:focus-visible { outline: 3px solid var(--navy); outline-offset: 6px; border-radius: 50%; }
+
+.bubble__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 22px 30px rgba(244, 80, 150, 0.28));
+}
+.bubble__label,
+.bubble__hint {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  text-align: center;
+}
+.bubble__label {
+  top: 42%;
+  font-family: var(--font-pixel);
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  line-height: 1.05;
+}
+.bubble__hint {
+  top: 66%;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* pop burst + stars (cloned into each bubble) */
+.bubble__fx { position: absolute; inset: -30%; pointer-events: none; }
+.fx__pop { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+.fx__star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14%;
+  opacity: 0;
+}
+
+
+
 /* ==========================================================================
    Experience
    ========================================================================== */
@@ -382,8 +473,12 @@ img {
   overflow: visible; /* flower can sit on the very ends */
   z-index: 1;
 }
-
-
+.experience__vine [id^="leaf_"] {
+  fill: #6fbf86;
+}
+.experience__vine #vine {
+  stroke: #4e8f66;
+}
 
 /* ---- Glass cards, centered on their leaf ---- */
 .exp-card {
@@ -405,6 +500,24 @@ img {
   line-height: 1.1;
   color: var(--navy);
 }
+.card__date {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: 0.75;
+}
+.card__role {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--ink);
+  opacity: 0.8;
+}
+
+
 .exp-card p {
   margin: 0;
   font-size: 1.75rem;
@@ -413,18 +526,22 @@ img {
 
 /* card centers = leaf centers in svg units */
 #card-dgi {
+  left: calc(var(--u) * 490 - 150px);
+  top: calc(var(--u) * 405 - 90px);
+}
+#card-barclays {
   left: calc(var(--u) * 1038 - 150px);
   top: calc(var(--u) * 319 - 90px);
 }
-#card-barclays {
+#card-google {
   left: calc(var(--u) * 1990 - 150px);
   top: calc(var(--u) * 558 - 90px);
 }
-#card-google {
+#card-ctp {
   left: calc(var(--u) * 2978 - 150px);
   top: calc(var(--u) * 293 - 90px);
 }
-#card-ctp {
+#card-halcyon {
   left: calc(var(--u) * 4178 - 150px);
   top: calc(var(--u) * 542 - 90px);
 }
@@ -434,6 +551,34 @@ img {
 #flowerRider {
   opacity: 0;
 }
+.resume-btn {
+  position: absolute;
+  z-index: 3;
+  left: calc(var(--u) * 4560 - 110px);   /* under the end of the rope */
+  top: calc(var(--u) * 470);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 1.25rem;
+  text-decoration: none;
+  box-shadow: 0 14px 30px rgba(91, 33, 212, 0.3);
+  opacity: 0;
+  visibility: hidden;             /* GSAP reveals it */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.resume-btn:hover,
+.resume-btn:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(91, 33, 212, 0.4);
+}
+
+
+
 
 
 /* ===========================================================
@@ -532,12 +677,6 @@ img {
     text-align: center;
   }
 
-  .portrait {
-    order: 2;
-    align-self: center;
-    width: min(88%, 24rem);
-    margin: 0;
-  }
   .role {
     order: 3;
     align-self: center;
@@ -550,6 +689,9 @@ img {
     font-size: clamp(0.9rem, 4.2vw, 1.25rem);
     letter-spacing: 0.1em;
   }
+  
+
+  .about__grid { grid-template-columns: 1fr; gap: 20px; }
+
+
 }
-
-
