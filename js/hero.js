@@ -208,7 +208,7 @@ photo.onload = () => {
       y: "120vh",
       rotation: (i) => (i % 2 ? 180 : -180),
       // opacity:0,
-      ease: "power1.in",
+      ease: "bounce.in",
       duration: 3,
       stagger: 0.1,
     })

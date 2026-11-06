@@ -11,7 +11,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
   <script defer src="js/hero.js"></script>
-  <script defer src="js/about.js"></script>
+  <script defer src="js/experience.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist+Pixel&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -74,15 +74,48 @@
 
   </header>
 
+
   <!-- About Section -->
-  <main>
-  <section class="about" id="about">
-  <div class="about__stage">
-    <div class="about__track">
 
-      <h2 class="section__title">About Me</h2>
+<section class="about" id="about">
+ <h2 class="section__title">About Me</h2>
 
-      <svg class="about__vine" viewBox="0 0 4800 900" fill="none"
+
+ <article class="about-card glass-card" id="card-education">
+        <h3 class="card__title">Education: Hunter College</h3>
+          <p><span> Major: Computer Science </span> <br>
+            <span> Minor: Applied Mathematics</span> <br>
+            Graduated: January 2025</p>
+      </article>
+      <article class="about-card glass-card" id="card-mission">
+        <h3 class="card__title">Mission</h3>
+        <p>Build applications that are FUN and help solve a stanger's problem</p>
+      </article>
+      <article class="about-card glass-card" id="card-now">
+        <h3 class="card__title">Where I am now</h3>
+        <p> Student in CodePath AI Applied Engineering Course <br>
+          Product Engineer for SpectAgent <br>
+          Open to full-time positions </p>
+      </article>
+      <article class="about-card glass-card" id="card-hobbies">
+        <h3 class="card__title">Hobbies</h3>
+        <p>Running, drawing, and playing pickleball with my dad.</p>
+      </article>
+
+</section>
+
+
+
+
+  <!-- Experience Section -->
+  
+  <section class="experience" id="experience">
+  <div class="experience__stage">
+    <div class="experience__track">
+
+      <h2 class="section__title">Experience</h2>
+
+      <svg class="experience__vine" viewBox="0 0 4800 900" fill="none"
            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path id="leaf_1" d="M531.682 489.992C524.09 512.462 494.657 517.652 479.837 499.134L425.386 431.09C418.999 423.109 417.116 412.426 420.387 402.743L448.283 320.179C455.875 297.709 485.308 292.519 500.128 311.037L554.579 379.081C560.966 387.062 562.849 397.745 559.578 407.428L531.682 489.992Z" fill="#2D562F"/>
         <path id="leaf_2" d="M1021.67 183.884C1033.3 157.878 1071.22 161.196 1078.16 188.826L1109.83 315.048C1111.47 321.57 1110.86 328.454 1108.12 334.593L1055.01 453.397C1043.39 479.403 1005.46 476.085 998.525 448.455L966.853 322.233C965.216 315.711 965.819 308.828 968.563 302.689L1021.67 183.884Z" fill="#2D562F"/>
@@ -151,62 +184,26 @@
         </g>
       </svg>
 
-      <article class="about-card glass-card" id="card-education">
-        <h3 class="card__title">Education: Hunter College</h3>
-          <p><span> Major: Computer Science </span> <br>
-            <span> Minor: Applied Mathematics</span> <br>
-            Graduated: January 2025</p>
+      <article class="exp-card glass-card" id="card-dgi">
+        <h3 class="card__title">Digital Girl Inc.</h3>
+          <p>Program Adminstrator <br> 
+            Lead Instructor </p>
       </article>
-      <article class="about-card glass-card" id="card-mission">
-        <h3 class="card__title">Mission</h3>
-        <p>Build applications that are FUN and help solve a stangers problem</p>
+      <article class="exp-card glass-card" id="card-barclays">
+        <h3 class="card__title">Barclays</h3>
+        <p>Data Engineering Intern</p>
       </article>
-      <article class="about-card glass-card" id="card-now">
-        <h3 class="card__title">Where I am now</h3>
-        <p> Student in CodePath AI Applied Engineering Course <br>
-          Product Engineer for SpectAgent <br>
-          Open to full-time positions </p>
+      <article class="exp-card glass-card" id="card-google">
+        <h3 class="card__title">Google</h3>
+        <p> SWE Fellow </p>
       </article>
-      <article class="about-card glass-card" id="card-hobbies">
-        <h3 class="card__title">Hobbies</h3>
-        <p>Running, drawing, and playing pickleball with my dad.</p>
+      <article class="exp-card glass-card" id="card-ctp">
+        <h3 class="card__title">Cuny Tech Prep</h3>
+        <p>SWE Fellow</p>
       </article>
 
     </div>
   </div>
-</section>
-</main>
-
-
-<!-- Experience -->
-
-<section id = "experience" class="experience">
-  <h1 class="section__title"> Experience </h1>
-
-
-<div class = exp__wrapper>
-  <div class="layout__container">
-      <div class="box large-square glass-card" ><img src="./images/jobs/dgi.png"/></div>
-      <div class="box small-square glass-card"><img src="./images/jobs/barclays.png"/> </div>
-      <div class="box small-square glass-card"><img src="./images/jobs/google.png"/> </div>
-      <div class="box small-square glass-card"><img src="./images/jobs/ctp-logo.png" /> </div>
-      <div class="box small-square glass-card"><img src="./images/jobs/halcyon.png" /> </div>
-  </div>
-
-  <div class="glass-card">
-
-    <p class="digital-girl"> Digital Girl Inc. </p>
-    <p class="barclays"> barclays</p>
-    <p class="google"> Google</p>  
-    <p class="ctp"> Cuny Tech Prep</p>
-    <p class="halcyon">Halcyon</p>
-
-  </div>
-
-</div>
-
-
-
 </section>
 
 
@@ -215,7 +212,7 @@
 <section id = "projects" class = "projects"> 
     <h1 class="section__title"> Projects</h1>
 
-
+</section>
 
 <!--Contact-->
 
@@ -257,14 +254,6 @@
   </footer>
 
   <script>
-    window.addEventListener("scroll", function () {
-      const navbar = document.querySelector(".navbar");
-      if (window.scrollY > 50) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
-      }
-    });
     function copyEmail(event) {
     navigator.clipboard.writeText('chowtasmia@gmail.com').then(() => {
       const msg = document.getElementById('copied-msg');
