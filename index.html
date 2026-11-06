@@ -219,11 +219,63 @@
 
 <!--Contact-->
 
-<section id = "contact" class="contact">
-  <h3> Contact Me </h3>
+<footer>
+    <div class="contact" id="contact">
+        <!-- Contact content container-->
+        <div class="content">
+          <h1>Contact Me</h1>
+          <!-- Contact Section title -->
+          <!-- Contact Section Description -->
+           <h3 onclick="copyEmail(event)">chowtasmia@gmail.com</h3>
+          <div class="social-icons">
+            <a href="mailto:chowtasmia@gmail.com?subject=Hello%20Tasmia&body=Just%20wanted%20to%20reach%20out!"
+            title="Click to email me."
+            onclick="copyEmail(event)" >
+            <img src="./images/SocialMedia/email.png" alt="Email icon" id="email-icon" style="cursor:pointer;">
+           </a>
+      
+         
+         <!-- Copied Message -->
+         <span id="copied-msg" style="margin:10px; color:rgb(89, 133, 221); display:none;">Copied!</span>
+            
+          
 
+          <!-- Social Media Links 
+          https://www.flaticon.com/ -->
+          
+            <a href="https://www.linkedin.com/in/tasmiachow/" target="_blank">
+              <img src="./images/SocialMedia/linkedin.png" alt="LinkedIn" />
+            </a>
+            <a href="https://github.com/tasmiachow" target="_blank">
+              <img src="./images/SocialMedia/github.png" alt="GitHub" />
+            </a>
+          </div>
+        <br>
+          
+        </div>
+      </div>
+  </footer>
 
-</section>
+  <script>
+    window.addEventListener("scroll", function () {
+      const navbar = document.querySelector(".navbar");
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
+    function copyEmail(event) {
+    navigator.clipboard.writeText('chowtasmia@gmail.com').then(() => {
+      const msg = document.getElementById('copied-msg');
+      msg.style.display = 'inline';
+      setTimeout(() => {
+        msg.style.display = 'none';
+      }, 1000);
+    });
+    // Let the mailto: continue to work (don’t call event.preventDefault)
+  }
+  </script>
 
 
  

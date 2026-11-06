@@ -480,6 +480,69 @@ img {
   aspect-ratio: 1 / 1;
 }
 
+/* ===========================================================
+  Contact Section 
+  =============================================================*/
+
+.contact {
+  color: var(--ink);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.contact h1 {
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+.contact h3 {
+  font-size: 1.5rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* Makes the content div smaller  */
+.contact .content {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contact p {
+  font-size: 1.5rem;
+}
+.social-icons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  color: #333;
+}
+
+.social-icons img {
+  width: auto;
+  height: 30px;
+  filter: grayscale(100%); /* Makes the image black and white */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.social-icons img:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 5px 65px rgba(85, 82, 82, 0.5);
+  background-color: rgba(15, 142, 226, 0.1);
+}
+
 /* ==================================================================
   Media Rules 
 ========================================================================== */
