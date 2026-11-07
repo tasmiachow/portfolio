@@ -130,37 +130,57 @@
     </header>
 
     <!-- About Section -->
-    <section class="about" id="about">
-      <div class="about__stage">
-        <h2 class="section__title">About Me</h2>
+   <section class="about" id="about">
+    <div class="about__stage">
+      <h2 class="section__title">About Me</h2>
 
-        <!-- cards: hidden until their bubble is popped -->
-        <div class="about__grid">
-          <article class="about-card glass-card" id="card-education" aria-hidden="true">
-            <h3 class="card__title">Education</h3>
-            <p>
-              <span> Major: Computer Science </span> <br />
-              <span> Minor: Applied Mathematics</span> <br />
-              Graduated: January 2025
-            </p>
-          </article>
-          <article class="about-card glass-card" id="card-mission" aria-hidden="true">
-            <h3 class="card__title">Mission</h3>
-            <p>Build applications that are FUN and help solve a stanger's problem</p>
-          </article>
-          <article class="about-card glass-card" id="card-now" aria-hidden="true">
-            <h3 class="card__title">Where I am now</h3>
-            <p>
-              Student in CodePath AI Applied Engineering Course <br />
-              Product Engineer for SpectAgent <br />
-              Open to full-time positions
-            </p>
-          </article>
-          <article class="about-card glass-card" id="card-hobbies" aria-hidden="true">
-            <h3 class="card__title">Hobbies</h3>
-            <p>Running, drawing, and playing pickleball with my dad.</p>
-          </article>
+      <!-- cards: hidden until their bubble is popped -->
+      <div class="about__grid">
+        
+        <!-- Education -->
+        <article class="about-card glass-card" id="card-education" aria-hidden="true">
+          <h3 class="card__title">Education</h3>
+          <div class="card__content">
+            <p class="card__line"><span class="badge-mint badge-status"><strong>Major:</strong>Computer Science</span></p>
+            <p class="card__line"><span class="badge-lavender badge-status"><strong>Minor:</strong> Applied Mathematics </span></p>
+            <p class="card__subtext"><span class="badge-status">Graduated: January 2025</span></p>
+          </div>
+        </article>
+
+        <!-- Mission -->
+        <article class="about-card glass-card" id="card-mission" aria-hidden="true">
+          <h3 class="card__title">Mission</h3>
+          <div class="card__content">
+            <p class="card__highlight">Building applications that are <span class="badge-status"><strong>FUN</strong></span> and solve real problems for strangers</p>
+          </div>
+        </article>
+
+        <!-- Where I am now -->
+        <article class="about-card glass-card" id="card-now" aria-hidden="true">
+          <h3 class="card__title">Where I am now</h3>
+          <div class="card__content">
+            <ul class="card__list">
+              <li>Student in CodePath AI Applied Engineering</li>
+              <li>Software Engineer building web applications for clients</li>
+              <li><span class="badge-status">Open to full-time roles</span></li>
+            </ul>
+          </div>
+        </article>
+
+      <!-- Hobbies -->
+      <article class="about-card glass-card" id="card-hobbies" aria-hidden="true">
+        <h3 class="card__title">Hobbies</h3>
+        <div class="card__content">
+          <ul class="card_list">
+            <li><span class="badge-mint badge-status"> Running </span></li>
+            <li><span class="badge-lavender badge-status"> Drawing </span></li> 
+            <li>Playing pickleball with my dad</li>
+          </ul>
         </div>
+      </article>
+
+    </div>
+  
 
         <!-- bubbles -->
         <button

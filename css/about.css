@@ -28,6 +28,50 @@
 .about-card.glass-card {
   background: rgba(255, 255, 255, 0.55);
 }
+
+
+/* Typography & Hierarchy Improvements */
+.about-card .card__title {
+  margin-bottom: 12px;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+}
+
+.about-card .card__content {
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+
+.card__list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card__list li {
+  font-size: 1rem;
+}
+
+/* Subtle badge accent for 'Open to full-time roles' */
+.badge-status.badge-lavender{
+  background: var(--lavender);
+}
+.badge-status.badge-mint {
+  background: var(--mint);
+}
+.badge-status {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 10px;
+  background: var(--accent);
+  color: var(--text);
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
 .about-card p {
   margin: 0;
   font-size: 1.15rem;
