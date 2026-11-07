@@ -50,6 +50,26 @@
   width: 400px;
   padding: 18px 20px 20px;
   border-radius: 20px;
+  /* logo on the left, date / title / role stacked on the right */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  align-items: center;
+}
+.exp-card > :not(.card__logo) {
+  grid-column: 2;
+}
+/* same white tile for every logo so different shapes read as a set */
+.card__logo {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  width: 56px;
+  height: 56px;
+  padding: 6px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(27, 16, 51, 0.12);
 }
 .exp-card.glass-card {
   background: rgba(255, 255, 255, 0.55);
@@ -160,6 +180,13 @@
     width: 230px;
     padding: 12px 14px 14px;
     border-radius: 16px;
+    column-gap: 10px;
+  }
+  .card__logo {
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+    border-radius: 10px;
   }
   .exp-card .card__title {
     font-size: 1.2rem;

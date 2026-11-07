@@ -50,7 +50,7 @@
     if (bubble.getAttribute("aria-expanded") === "true") return; // already popped
     floats[i] = gsap.to(bubble, {
       y: -15,
-      duration: gsap.utils.random(1, 2),
+      duration: gsap.utils.random(1, 1.5),
       ease: "sine.inOut",
       yoyo: true,
       repeat: -1,
@@ -111,7 +111,7 @@
 
       // the card lands in the grid
       .fromTo(card, { autoAlpha: 0, scale: 0.96, y: 20 },
-                    { autoAlpha: 1, scale: 1, y: 0, duration: 0.5 },
+                    { autoAlpha: 1, scale: 1, y: 0, duration: 0.4 },
        "-=0.4");                                         // hint 8
 
     popped++;
