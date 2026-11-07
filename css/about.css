@@ -78,6 +78,30 @@
   line-height: 1.5;
 }
 
+/* Education: stacked badge lines, compact spacing */
+#card-education .card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+#card-education .card__line,
+#card-education .card__subtext {
+  line-height: 1.3;
+}
+#card-education .badge-status {
+  margin-top: 0;
+  max-width: 100%;
+  padding: 4px 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere; /* long text wraps inside the pill instead of overflowing */
+}
+#card-education .card__subtext .badge-status {
+  font-weight: 500;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
 /* bubbles */
 .bubble {
   position: absolute;
@@ -169,6 +193,14 @@
 
   .about-card p {
     font-size: 1rem;
+  }
+
+  #card-education .card__content {
+    gap: 6px;
+  }
+  #card-education .badge-status {
+    font-size: 0.85rem;
+    padding: 3px 10px;
   }
 
   /* zig-zag down the stacked cards instead of one row */

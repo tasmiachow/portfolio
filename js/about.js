@@ -30,7 +30,7 @@
   gsap.to(aboutEl.bubbles, {
     scale: 1,
     autoAlpha: 1,
-    ease: "back.out(1.7)",                                    
+    ease: "power2.in",                                    
     duration: 0.8,
     // each bubble starts floating as soon as ITS entrance ends (not after all four),
     // so the first bubble (Education) can be popped right away
