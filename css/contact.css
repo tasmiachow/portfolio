@@ -1,15 +1,35 @@
 /* ===========================================================
-  Contact Section 
+  Tools & Contact Section 
   =============================================================*/
+.badge-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-container img {
+  height: 28px; /* standard height boost, remove or set to auto if default height is fine */
+  width: auto;
+}
+
+
+.tool__title{
+    padding-left: var(--text-inset);
+}
+
+.small__title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 400;
+    font-family: var(--font-pixel);
+    text-transform: uppercase;
+}
 
 .contact {
   display: flex; flex-direction: column; align-items: center;
   gap: 1.25rem; padding: 6rem 1.5rem 4rem; text-align: center;
   color: var(--navy);
 }
-.contact__title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 400;
-    font-family: var(--font-pixel);
-}
+
 
 .contact__email {
   position: relative; font: 600 clamp(1.1rem, 2.5vw, 1.5rem) var(--font-sans);
