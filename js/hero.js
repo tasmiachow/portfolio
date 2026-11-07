@@ -7,6 +7,11 @@
 (() => {
   gsap.registerPlugin(ScrollTrigger);
 
+  // ScrollTrigger also remembers/restores scroll on refresh; turn that off and
+  // start at the top so the scrubbed hero never begins half-played.
+  ScrollTrigger.clearScrollMemory("manual");
+  window.scrollTo(0, 0);
+
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- 1. Intro ---------- */
@@ -150,8 +155,9 @@
 
       // 2) swap to the sprite
 
-      .to("#headshot", { opacity: 0, duration: 0.5 })
-      .to("#spritesheet", { opacity: 1, duration: 0.5 }, "<")
+      // fromTo so both ends are explicit: scrubbing back always restores the face
+      .fromTo("#headshot", { opacity: 1 }, { opacity: 0, duration: 0.5 })
+      .fromTo("#spritesheet", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "<")
 
       //two frames were the character has no mouth
       .to("#spritesheet", {
