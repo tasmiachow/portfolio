@@ -47,7 +47,9 @@
     .fromTo(el.stage, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
     .fromTo(el.role, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.5)
     .add(startRoleLoop, 1.1)
-    .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 1.3);
+    .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 1.3)
+    // tells nav.js to fade the menu icon in (also fires when the intro is skipped)
+    .add(() => document.dispatchEvent(new Event("intro:done")), 1.5);
 
   // Any scroll / tap / key press jumps the intro to its end.
   const skipEvents = ["wheel", "touchstart", "keydown", "pointerdown"];
@@ -95,6 +97,15 @@
 
   photo.onload = () => {
     drawPixelated(1);
+
+    // reduced motion: no pin, no pixelate/bubble/stars. Jump straight to the
+    // light theme so the sections below look right, and show the scroll arrow.
+    if (reduceMotion) {
+      gsap.set(":root", { "--mesh": 1, "--text": "#1B1033" });
+      gsap.set(el.cue, { autoAlpha: 0 }); // "scroll to animate" doesn't apply
+      gsap.set(el.scrollCue, { autoAlpha: 1 });
+      return;
+    }
 
     const state = { p: 0 }; // progress 0 -> 1, the tween animates this number
 

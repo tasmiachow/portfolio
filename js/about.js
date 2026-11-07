@@ -12,7 +12,8 @@
 
   // reduced motion: show the cards, skip the bubbles
   if (reduceMotion) {
-    gsap.set(aboutEl.cards, { autoAlpha: 1 });      
+    gsap.set(aboutEl.cards, { autoAlpha: 1 });
+    aboutEl.cards.forEach((card) => card.setAttribute("aria-hidden", "false")); // visible, so let screen readers in
     gsap.set(aboutEl.bubbles, { display: "none" });
     return;
   }

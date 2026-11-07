@@ -10,6 +10,11 @@
 
   gsap.set(cards, { xPercent: RANGE, opacity: 0, scale: 0 });
 
+  // reduced motion: no autoplaying loops. Give the videos controls so they can be played on demand.
+  if (reduceMotion) {
+    document.querySelectorAll(".project__media video").forEach((v) => (v.controls = true));
+  }
+
   const animateFunc = (element) => {
     const tl = gsap.timeline();
 		tl.fromTo(element, {scale: 0, opacity: 0}, {scale: 1, opacity: 1, zIndex: 100, duration: 0.5, yoyo: true, repeat: 1, ease: "power1.in", immediateRender: false})
@@ -33,7 +38,7 @@ function updateActive() {
     if (prev){
         prev.pause();
     }
-     if(cards[i].querySelector("video")){
+     if(cards[i].querySelector("video") && !reduceMotion){
         cards[i].querySelector("video").play();
      }
     active = i;
@@ -47,9 +52,20 @@ function updateActive() {
     paused: true,
   });
 
+  // glide the playhead to offset; reduced motion jumps there instantly instead
+  function seek(offset) {
+    scrub.vars.offset = offset;
+    if (reduceMotion) {
+      playhead.offset = offset;
+      seamlessLoop.time(wrapTime(offset));
+      updateActive();
+    } else {
+      scrub.invalidate().restart();
+    }
+  }
+
   function moveTo(offset) {
-    scrub.vars.offset = snapTime(offset);
-     scrub.invalidate().restart();
+    seek(snapTime(offset));
   }
 
   document.querySelector(".next").addEventListener("click", () => moveTo(scrub.vars.offset + spacing));  
@@ -61,8 +77,7 @@ function updateActive() {
     dragClickables: false,
     onPress() { this.startOffset = scrub.vars.offset; },
     onDrag() {
-        scrub.vars.offset = this.startOffset + (this.startX - this.x) * (spacing / cards[0].offsetWidth);
-        scrub.invalidate().restart();
+        seek(this.startOffset + (this.startX - this.x) * (spacing / cards[0].offsetWidth));
     },
     onDragEnd() { moveTo(scrub.vars.offset); },
   });

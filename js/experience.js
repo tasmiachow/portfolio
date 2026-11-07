@@ -1,6 +1,8 @@
 (() => {
   gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   /* ---------- 1. about ---------- */
 
   const expEl = {
@@ -17,6 +19,8 @@
 
   // vars
   const vineLength = expEl.vine.getTotalLength();
+
+  const SPEED_FACTOR = 1.3; // 1 = original speed
 
   const getScrollDist = () => expEl.track.offsetWidth - expEl.stage.clientWidth;
 
@@ -70,18 +74,34 @@
     const kb = smooth(clamp((p - 0.96) / 0.03, 0, 1));
     gsap.set(expEl.resumeBtn, { autoAlpha: kb, y: (1 - kb) * 20 });
   }
-  render(0);
+  // reduced motion: everything is already drawn and visible; the track just pans
+  // with the scroll (needed to reach the cards), no flower, no grow/fade effects.
+  function renderStatic(p) {
+    gsap.set(expEl.track, { x: -p * getScrollDist() });
+  }
+
+  if (reduceMotion) {
+    gsap.set(expEl.vine, { drawSVG: "0% 100%" });
+    gsap.set(expEl.leaves, { scale: 1 });
+    gsap.set(expEl.cards, { autoAlpha: 1, y: 0 });
+    gsap.set(expEl.resumeBtn, { autoAlpha: 1, y: 0 });
+    gsap.set(expEl.flowerRider, { autoAlpha: 0 });
+    renderStatic(0);
+  } else {
+    render(0);
+  }
 
   //horizontal scroll trigger
 
   ScrollTrigger.create({
     trigger: expEl.section,
     start: "top top",
-    end: () => "+=" + getScrollDist(),
+    // more scroll distance = slower vine/camera. Raise SPEED_FACTOR to slow it further.
+    end: () => "+=" + getScrollDist() * SPEED_FACTOR,
     pin: true,
     invalidateOnRefresh: true,
     refreshPriority: 0,
-    onUpdate: (self) => render(self.progress),
+    onUpdate: (self) => (reduceMotion ? renderStatic : render)(self.progress),
     markers: true,
   });
 })();

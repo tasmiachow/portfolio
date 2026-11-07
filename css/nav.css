@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Site nav: fixed top-left icon that expands into an overlay panel.
+   States (set by js/nav.js):
+     .is-ready  icon has faded in (after the hero intro)
+     .is-idle   user went idle, icon hidden until they scroll
+     .is-open   panel + scrim showing
+   ========================================================================== */
+
+/* ---- Toggle (three bars -> X) ---- */
+.nav-toggle {
+  position: fixed;
+  top: var(--nav-gap);
+  left: var(--nav-gap);
+  z-index: 1001; /* above the panel so it doubles as the close button */
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  width: var(--nav-size);
+  height: var(--nav-size);
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  background: rgb(255 255 255 / 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text); /* follows the dark -> light theme change at the bubble pop */
+  cursor: pointer;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+.nav-toggle:hover {
+  background: rgb(255 255 255 / 0.25);
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 0.3s ease,
+    opacity 0.2s ease;
+}
+
+/* hidden before the intro finishes, and while idle.
+   opacity (not visibility) so keyboard users can still Tab to it, which reveals it again */
+.js .site-nav:not(.is-ready) .nav-toggle,
+.site-nav.is-idle:not(.is-open) .nav-toggle {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+/* open: bars become an X, dark on the light panel */
+.site-nav.is-open .nav-toggle {
+  color: var(--ink);
+  background: rgb(255 255 255 / 0.6);
+}
+.site-nav.is-open .nav-toggle__bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg); /* 7px = bar height + gap */
+}
+.site-nav.is-open .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+.site-nav.is-open .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- Scrim: dims + blurs the page behind the panel ---- */
+.nav-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgb(14 7 32 / 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  /* visibility flips at the END of closing (so the fade shows) ... */
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+.site-nav.is-open .nav-scrim {
+  opacity: 1;
+  visibility: visible;
+  /* ... and at the START of opening */
+  transition:
+    opacity 0.3s ease,
+    visibility 0s;
+}
+
+/* ---- Panel: grows out of the icon's corner ---- */
+.nav-panel {
+  position: fixed;
+  top: var(--nav-gap);
+  left: var(--nav-gap);
+  z-index: 1000;
+  width: min(340px, calc(100vw - var(--nav-gap) * 2));
+  padding: calc(var(--nav-size) + 1.5rem) 1.75rem 1.75rem;
+  border-radius: 24px;
+  transform-origin: top left;
+  transform: scale(0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1),
+    opacity 0.25s ease,
+    visibility 0s linear 0.35s;
+}
+.nav-panel.glass-card {
+  background: rgb(255 255 255 / 0.7);
+}
+/* visible immediately on open so the first link can take focus right away */
+.site-nav.is-open .nav-panel {
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1),
+    opacity 0.25s ease,
+    visibility 0s;
+}
+
+.nav-panel__list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nav-panel__list a {
+  display: block;
+  padding: 0.35rem 0;
+  font-family: var(--font-pixel);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+.nav-panel__list a:hover,
+.nav-panel__list a:focus-visible {
+  color: var(--navy);
+  transform: translateX(6px);
+}

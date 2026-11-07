@@ -19,6 +19,8 @@
 
 #title {
   grid-area: title;
+  /* keep the name clear of the fixed nav icon when the gutter is narrower than it */
+  padding-left: max(0px, calc(var(--nav-gap) + var(--nav-size) + 0.75rem - var(--gutter)));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -69,7 +71,8 @@
 
 .stage {
   position: relative;
-  width: min(800px, 90vw);
+  /* capped by height too, so the stage + "scroll to animate" fit on short/wide screens */
+  width: min(800px, 90vw, 62svh);
   aspect-ratio: 1;
 }
 .stage > * {
@@ -138,6 +141,7 @@
 
   /* name above role, both centered, instead of side by side */
   #title {
+    padding-left: 0; /* centered on phones, sits below the icon */
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
@@ -152,12 +156,5 @@
   .role {
     justify-items: center;
     text-align: center;
-  }
-}
-
-/* phones held sideways: keep the whole stage on screen */
-@media (max-height: 560px) and (orientation: landscape) {
-  .stage {
-    width: min(800px, 90vw, 75svh);
   }
 }

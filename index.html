@@ -13,6 +13,8 @@
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
+    <script defer src="js/backdrop.js"></script>
+    <script defer src="js/nav.js"></script>
     <script defer src="js/hero.js"></script>
     <script defer src="js/about.js"></script>
     <script defer src="js/experience.js"></script>
@@ -31,8 +33,47 @@
     <link rel="stylesheet" href="css/experience.css" />
     <link rel="stylesheet" href="css/project.css" />
     <link rel="stylesheet" href="css/contact.css" />
+    <link rel="stylesheet" href="css/nav.css" />
   </head>
   <body>
+    <!-- page background: blobs drift slowly on scroll (js/backdrop.js) -->
+    <div class="backdrop" aria-hidden="true">
+      <span class="blob blob--1"></span>
+      <span class="blob blob--2"></span>
+      <span class="blob blob--3"></span>
+      <span class="blob blob--4"></span>
+      <span class="blob blob--5"></span>
+    </div>
+
+    <!-- Nav: icon top-left, expands into an overlay panel (js/nav.js) -->
+    <nav class="site-nav" aria-label="Main">
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-panel"
+        aria-label="Open menu"
+      >
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+      <div class="nav-scrim"></div>
+      <div class="nav-panel glass-card" id="nav-panel">
+        <ul class="nav-panel__list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="./assets/Tasmia_Chowdhury_Resume.pdf" target="_blank" rel="noopener"
+              >Resume <span aria-hidden="true">↗</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <header class="hero" id="top">
       <div id="title">
         <h2 class="greeting__style">Tasmia Chowdhury</h2>
