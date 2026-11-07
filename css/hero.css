@@ -57,6 +57,15 @@
   will-change: transform;
 }
 
+#user__cue {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: clamp(1.1rem, 2.6vw, 2.2rem);
+  color: var(--accent);
+}
+
+
 /* ---- Headshot that annimates into sprite ---- */
 
 .sprite {

@@ -196,13 +196,6 @@ img {
   );
 }
 
-#user__cue {
-  font-family: var(--font-sans);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: clamp(1.1rem, 2.6vw, 2.2rem);
-  color: var(--accent);
-}
 
 /* ---- Scroll cue ---- */
 .scroll-cue {
