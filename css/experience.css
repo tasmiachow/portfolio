@@ -12,14 +12,7 @@
   position: relative;
   height: 100vh;
   overflow: hidden;
-  /* mesh background so the glass has color to blur */
-  background:
-    radial-gradient(700px 520px at 12% 10%, rgba(167, 119, 255, 0.55), transparent 70%),
-    radial-gradient(640px 500px at 88% 8%, rgba(190, 160, 255, 0.55), transparent 70%),
-    radial-gradient(760px 560px at 90% 95%, rgba(255, 110, 195, 0.4), transparent 70%),
-    radial-gradient(700px 520px at 8% 98%, rgba(255, 150, 215, 0.4), transparent 70%),
-    radial-gradient(520px 380px at 55% 60%, rgba(217, 254, 225, 0.55), transparent 70%),
-    var(--cream);
+  /* background comes from the shared page backdrop in base.css */
 }
 
 .experience__track {
@@ -51,6 +44,9 @@
 .exp-card {
   position: absolute;
   z-index: 3; /* above vine, leaves and flower */
+  /* shift/lift pull the card back so it sits on its leaf */
+  --card-shift: 150px;
+  --card-lift: 90px;
   width: 400px;
   padding: 18px 20px 20px;
   border-radius: 20px;
@@ -92,24 +88,24 @@
 
 /* card centers = leaf centers in svg units */
 #card-dgi {
-  left: calc(var(--u) * 490 - 150px);
-  top: calc(var(--u) * 405 - 90px);
+  left: calc(var(--u) * 490 - var(--card-shift));
+  top: calc(var(--u) * 405 - var(--card-lift));
 }
 #card-barclays {
-  left: calc(var(--u) * 1038 - 150px);
-  top: calc(var(--u) * 319 - 90px);
+  left: calc(var(--u) * 1038 - var(--card-shift));
+  top: calc(var(--u) * 319 - var(--card-lift));
 }
 #card-google {
-  left: calc(var(--u) * 1990 - 150px);
-  top: calc(var(--u) * 558 - 90px);
+  left: calc(var(--u) * 1990 - var(--card-shift));
+  top: calc(var(--u) * 558 - var(--card-lift));
 }
 #card-ctp {
-  left: calc(var(--u) * 2978 - 150px);
-  top: calc(var(--u) * 293 - 90px);
+  left: calc(var(--u) * 2978 - var(--card-shift));
+  top: calc(var(--u) * 293 - var(--card-lift));
 }
 #card-halcyon {
-  left: calc(var(--u) * 4178 - 150px);
-  top: calc(var(--u) * 542 - 90px);
+  left: calc(var(--u) * 4178 - var(--card-shift));
+  top: calc(var(--u) * 542 - var(--card-lift));
 }
 
 /* hidden until GSAP reveals them */
@@ -143,4 +139,43 @@
 .resume-btn:focus-visible {
   transform: translateY(-3px);
   box-shadow: 0 18px 36px rgba(91, 33, 212, 0.4);
+}
+
+
+/* ==========================================================================
+   Experience — small screens
+   ========================================================================== */
+@media (max-width: 700px) {
+  /* svh doesn't change when the mobile address bar shows/hides, so the pin stays steady */
+  .experience {
+    --u: calc(100svh / 900);
+  }
+  .experience__stage {
+    height: 100svh;
+  }
+
+  .exp-card {
+    --card-shift: 115px; /* half the width */
+    --card-lift: 50px;   /* about half the height */
+    width: 230px;
+    padding: 12px 14px 14px;
+    border-radius: 16px;
+  }
+  .exp-card .card__title {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+  }
+  .exp-card .card__date {
+    font-size: 0.6rem;
+    margin-bottom: 4px;
+  }
+  /* needs .exp-card in front to beat the ".exp-card p" 1.75rem rule */
+  .exp-card .card__role {
+    font-size: 0.85rem;
+  }
+
+  .resume-btn {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
 }

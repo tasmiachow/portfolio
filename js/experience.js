@@ -33,6 +33,8 @@
 
   gsap.set(expEl.flowerRider, { autoAlpha: 1 });
 
+  const narrow = window.matchMedia("(max-width: 700px)"); // same breakpoint as the CSS
+
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const smooth = (k) => k * k * (3 - 2 * k);
 
@@ -50,7 +52,9 @@
 
     // 3) camera
     const scale = expEl.track.offsetWidth / 4800;
-    const cam = clamp(pt.x * scale - expEl.stage.clientWidth / 2, 0, getScrollDist());
+    // phones: keep the flower right of center so the card it just passed stays on screen
+    const anchor = narrow.matches ? 0.7 : 0.5;
+    const cam = clamp(pt.x * scale - expEl.stage.clientWidth * anchor, 0, getScrollDist());
     gsap.set(expEl.track, { x: -cam });
     // 4) leaves
     expEl.leaves.forEach((leaf, i) => {

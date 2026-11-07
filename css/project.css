@@ -6,13 +6,6 @@
   --card-w: clamp(280px, 28vw, 380px);
   --card-h: 460px;
 }
-.projects {
-  background:
-    radial-gradient(620px 520px at 18% 22%, rgba(160, 120, 255, 0.75), transparent 70%),
-    radial-gradient(560px 460px at 50% 80%, rgba(255, 110, 195, 0.6), transparent 70%),
-    radial-gradient(620px 520px at 84% 24%, rgba(130, 110, 255, 0.6), transparent 70%),
-    radial-gradient(460px 360px at 68% 70%, rgba(190, 255, 215, 0.9), transparent 70%), var(--cream);
-}
 
 .gallery {
   position: relative;
@@ -123,4 +116,44 @@
 .drag-proxy {
   position: absolute;
   visibility: hidden;
+}
+
+/* ==========================================================================
+   Projects — small screens
+   ========================================================================== */
+@media (max-width: 700px) {
+  .projects {
+    --card-w: min(300px, 82vw);
+    --card-h: 430px;
+  }
+
+  .gallery {
+    height: 560px;
+  }
+
+  .project-card .card__title {
+    font-size: 1.6rem;
+    margin-top: 12px;
+  }
+
+  .project__desc {
+    font-size: 0.95rem;
+  }
+}
+
+/* short screens (phones sideways): 460px cards were getting clipped */
+@media (max-height: 560px) and (orientation: landscape) {
+  .projects {
+    --card-w: 260px;
+    --card-h: 340px;
+  }
+  .gallery {
+    height: 440px;
+  }
+  .project__media {
+    aspect-ratio: 16 / 8;
+  }
+  .project__desc {
+    font-size: 0.85rem;
+  }
 }

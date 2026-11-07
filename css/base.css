@@ -27,6 +27,9 @@
 
   /* How far the greeting + role sit from the left edge (raise to push toward center) */
   --text-inset: clamp(0rem, 6vw, 6rem);
+
+  /* 0 = dark intro backdrop, 1 = light mesh. hero.js fades it in at the bubble pop */
+  --mesh: 0;
 }
 
 /* ==========================================================================
@@ -40,6 +43,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* body's overflow-x alone doesn't stop sideways panning on phones */
+  overflow-x: clip;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -55,6 +60,44 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Page backdrop
+   One fixed layer behind every section, so there are no seams between them.
+   Sizes use vmax so the blobs fill big monitors as well as phones.
+   ========================================================================== */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100lvh; /* tallest mobile viewport, no gap when the address bar hides */
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* dark intro: soft glows so the hero isn't flat */
+body::before {
+  background:
+    radial-gradient(55vmax 45vmax at 15% 20%, rgb(122 60 255 / 0.35), transparent 70%),
+    radial-gradient(50vmax 40vmax at 88% 30%, rgb(255 46 147 / 0.22), transparent 70%),
+    radial-gradient(60vmax 45vmax at 55% 105%, rgb(122 60 255 / 0.28), transparent 70%),
+    var(--bg);
+}
+
+/* light mesh used by every section after the pop */
+body::after {
+  opacity: var(--mesh);
+  background:
+    radial-gradient(48vmax 40vmax at 18% 20%, rgb(160 120 255 / 0.7), transparent 70%),
+    radial-gradient(44vmax 36vmax at 85% 18%, rgb(130 110 255 / 0.55), transparent 70%),
+    radial-gradient(46vmax 38vmax at 50% 88%, rgb(255 110 195 / 0.55), transparent 70%),
+    radial-gradient(38vmax 30vmax at 76% 66%, rgb(190 255 215 / 0.85), transparent 70%),
+    radial-gradient(36vmax 30vmax at 8% 92%, rgb(255 150 215 / 0.45), transparent 70%),
+    var(--cream);
 }
 
 h1,
@@ -209,4 +252,14 @@ img {
 /* Every role face after the first starts flipped away; hero.js flips them in */
 .js .role__face:not(:first-child) {
   transform: rotateX(90deg);
+}
+
+/* ==========================================================================
+   Small screens
+   ========================================================================== */
+@media (max-width: 700px) {
+  /* 4.5rem minimum made "Experience" wider than a phone */
+  .section__title {
+    font-size: clamp(2.75rem, 14vw, 4.5rem);
+  }
 }

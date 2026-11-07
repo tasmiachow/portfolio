@@ -175,7 +175,7 @@
         },
         "<",
       )
-      .to(":root", { "--bg": "#F6F2FF", "--text": "#1B1033", duration: 2, ease: "none" }, "<")
+      .to(":root", { "--mesh": 1, "--text": "#1B1033", duration: 2, ease: "none" }, "<")
       .to(
         "#spritesheet",
         {
