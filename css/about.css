@@ -1,0 +1,109 @@
+/*=======================================================================
+    About Section 
+  ====================================================================== */
+/* ---- About (bubbles) ---- */
+.about__stage {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(2rem, 6vh, 4rem) var(--gutter) 6rem;
+  overflow: hidden;
+  background:
+    radial-gradient(620px 520px at 22% 24%, rgba(160, 120, 255, 0.78), transparent 70%),
+    radial-gradient(560px 460px at 52% 82%, rgba(255, 110, 195, 0.62), transparent 70%),
+    radial-gradient(620px 520px at 82% 24%, rgba(130, 110, 255, 0.62), transparent 70%),
+    radial-gradient(460px 360px at 70% 78%, rgba(190, 255, 215, 0.95), transparent 70%),
+    var(--cream);
+}
+
+/* 2x2 grid of cards, reserved space from the start */
+.about__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 520px));
+  gap: 40px;
+  justify-content: center;
+  margin-top: clamp(2rem, 6vh, 4rem);
+}
+.about-card {
+  min-height: 210px;
+  padding: 28px 32px;
+  border-radius: 24px;
+  opacity: 0;
+  visibility: hidden; /* GSAP reveals with autoAlpha */
+}
+.about-card.glass-card {
+  background: rgba(255, 255, 255, 0.55);
+}
+.about-card p {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+/* bubbles */
+.bubble {
+  position: absolute;
+  z-index: 3;
+  left: calc(var(--x) - var(--size) / 2); /* no CSS transform, GSAP owns it */
+  top: calc(var(--y) - var(--size) * 0.48);
+  width: var(--size);
+  aspect-ratio: 1 / 0.96;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+}
+.bubble:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+.bubble__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 22px 30px rgba(244, 80, 150, 0.28));
+}
+.bubble__label,
+.bubble__hint {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  text-align: center;
+}
+.bubble__label {
+  top: 42%;
+  font-family: var(--font-pixel);
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  line-height: 1.05;
+}
+.bubble__hint {
+  top: 66%;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* pop burst + stars (cloned into each bubble) */
+.bubble__fx {
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+}
+.fx__pop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.fx__star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14%;
+  opacity: 0;
+}

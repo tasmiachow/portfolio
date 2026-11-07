@@ -58,7 +58,8 @@
   });
 
   function pop(bubble, i) {
-    floats[i].kill();                                  // hint 1
+    // console.log(i, floats);
+    floats[i].kill();                                  
 
     const card = document.getElementById(bubble.dataset.card);       
     const body  = bubble.querySelectorAll(".bubble__img, .bubble__label, .bubble__hint");
@@ -107,12 +108,5 @@
     popped++;
     if (popped === aboutEl.bubbles.length) { /* all four done */ }
   }
-
-
-
-
-
-
-
 
 })();

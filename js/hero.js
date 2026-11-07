@@ -4,223 +4,225 @@
    2. Scroll (pinned):      headshot pixelates -> swaps to the sprite -> scroll arrow appears
    ========================================================================== */
 
-gsap.registerPlugin(ScrollTrigger);
+(() => {
+  gsap.registerPlugin(ScrollTrigger);
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ---------- 1. Intro ---------- */
+  /* ---------- 1. Intro ---------- */
 
-const el = {
-  stage: document.querySelector(".stage"),
-  role: document.querySelector(".role"),
-  faces: [...document.querySelectorAll(".role__face")],
-  cue: document.querySelector("#user__cue"),
-  scrollCue: document.querySelector(".scroll-cue"),
-  cueIcon: document.querySelector(".scroll-cue__gems"),
-};
-
-const ROLE_HOLD = 1; // seconds each role stays on screen
-
-// Software Engineer -> Product Builder -> Full Stack Developer -> repeat
-function startRoleLoop() {
-  if (reduceMotion) return;
-
-  let i = 0;
-  const flip = () => {
-    const current = el.faces[i];
-    i = (i + 1) % el.faces.length;
-    const next = el.faces[i];
-
-    gsap
-      .timeline({ onComplete: () => gsap.delayedCall(ROLE_HOLD, flip) })
-      .to(current, { rotateX: -90, duration: 0.4, ease: "power2.in" })
-      .fromTo(next, { rotateX: 90 }, { rotateX: 0, duration: 0.5, ease: "power2.out" });
+  const el = {
+    stage: document.querySelector(".stage"),
+    role: document.querySelector(".role"),
+    faces: [...document.querySelectorAll(".role__face")],
+    cue: document.querySelector("#user__cue"),
+    scrollCue: document.querySelector(".scroll-cue"),
+    cueIcon: document.querySelector(".scroll-cue__gems"),
   };
 
-  gsap.delayedCall(ROLE_HOLD, flip);
-}
+  const ROLE_HOLD = 1; // seconds each role stays on screen
 
-const intro = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+  // Software Engineer -> Product Builder -> Full Stack Developer -> repeat
+  function startRoleLoop() {
+    if (reduceMotion) return;
 
-intro
-  .fromTo(el.stage, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
-  .fromTo(el.role, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.5)
-  .add(startRoleLoop, 1.1)
-  .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 1.3);
+    let i = 0;
+    const flip = () => {
+      const current = el.faces[i];
+      i = (i + 1) % el.faces.length;
+      const next = el.faces[i];
 
-// Any scroll / tap / key press jumps the intro to its end.
-const skipEvents = ["wheel", "touchstart", "keydown", "pointerdown"];
+      gsap
+        .timeline({ onComplete: () => gsap.delayedCall(ROLE_HOLD, flip) })
+        .to(current, { rotateX: -90, duration: 0.4, ease: "power2.in" })
+        .fromTo(next, { rotateX: 90 }, { rotateX: 0, duration: 0.5, ease: "power2.out" });
+    };
 
-function skipIntro() {
-  intro.progress(1, false);
-  skipEvents.forEach((e) => window.removeEventListener(e, skipIntro));
-}
+    gsap.delayedCall(ROLE_HOLD, flip);
+  }
 
-if (reduceMotion) {
-  intro.progress(1, false);
-} else {
-  skipEvents.forEach((e) => window.addEventListener(e, skipIntro, { passive: true }));
-  intro.play();
-}
+  const intro = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
 
-/* ---------- 2. Pixelate on scroll ---------- */
+  intro
+    .fromTo(el.stage, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
+    .fromTo(el.role, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.5)
+    .add(startRoleLoop, 1.1)
+    .fromTo(el.cue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 1.3);
 
-const canvas = document.getElementById("headshot");
-const ctx = canvas.getContext("2d");
-const SIZE = 800;
-const BLOCKS = [1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100]; // all divide 800
-const MAX_BLOCK = 100;
+  // Any scroll / tap / key press jumps the intro to its end.
+  const skipEvents = ["wheel", "touchstart", "keydown", "pointerdown"];
 
-const photo = new Image();
-const off = document.createElement("canvas"); // tiny offscreen canvas
-const octx = off.getContext("2d");
+  function skipIntro() {
+    intro.progress(1, false);
+    skipEvents.forEach((e) => window.removeEventListener(e, skipIntro));
+  }
 
-// Pick the allowed block size closest to b (compared on a log scale)
-function snap(b) {
-  return BLOCKS.reduce((best, v) =>
-    Math.abs(Math.log(v) - Math.log(b)) < Math.abs(Math.log(best) - Math.log(b)) ? v : best,
-  );
-}
+  if (reduceMotion) {
+    intro.progress(1, false);
+  } else {
+    skipEvents.forEach((e) => window.addEventListener(e, skipIntro, { passive: true }));
+    intro.play();
+  }
 
-function drawPixelated(block) {
-  const cells = SIZE / block;
-  off.width = off.height = cells;
-  octx.imageSmoothingEnabled = true;
-  octx.drawImage(photo, 0, 0, cells, cells); // shrink
-  ctx.imageSmoothingEnabled = false;
-  ctx.clearRect(0, 0, SIZE, SIZE);
-  ctx.drawImage(off, 0, 0, cells, cells, 0, 0, SIZE, SIZE); // blow back up
-}
+  /* ---------- 2. Pixelate on scroll ---------- */
 
-photo.onload = () => {
-  drawPixelated(1);
+  const canvas = document.getElementById("headshot");
+  const ctx = canvas.getContext("2d");
+  const SIZE = 800;
+  const BLOCKS = [1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100]; // all divide 800
+  const MAX_BLOCK = 100;
 
-  const state = { p: 0 }; // progress 0 -> 1, the tween animates this number
+  const photo = new Image();
+  const off = document.createElement("canvas"); // tiny offscreen canvas
+  const octx = off.getContext("2d");
 
-  // arrow bob: paused until the scroll reaches the very end
-  const bob = gsap.to(el.cueIcon, {
-    y: 10,
-    duration: 0.9,
-    ease: "sine.inOut",
-    repeat: -1,
-    yoyo: true,
-    paused: true,
-  });
+  // Pick the allowed block size closest to b (compared on a log scale)
+  function snap(b) {
+    return BLOCKS.reduce((best, v) =>
+      Math.abs(Math.log(v) - Math.log(b)) < Math.abs(Math.log(best) - Math.log(b)) ? v : best,
+    );
+  }
 
-  gsap
-    .timeline({
-      scrollTrigger: {
-        trigger: ".sprite",
-        start: "top 10%",
-        end: "+=3000",
-        pin: true,
-        scrub: true,
-        markers: true,
-        refreshPriority: 1,
-        onUpdate: (self) => (self.progress === 1 ? bob.play() : bob.pause()),
-      },
-    })
-    // 1) pixelate
-    .to(state, {
-      p: 1,
-      ease: "none",
-      duration: 4,
-      onUpdate: () => drawPixelated(snap(Math.exp(Math.log(MAX_BLOCK) * state.p))),
-    })
-    .to(el.cue, { autoAlpha: 0, duration: 1, ease: "power2.out" }, "<")
+  function drawPixelated(block) {
+    const cells = SIZE / block;
+    off.width = off.height = cells;
+    octx.imageSmoothingEnabled = true;
+    octx.drawImage(photo, 0, 0, cells, cells); // shrink
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, SIZE, SIZE);
+    ctx.drawImage(off, 0, 0, cells, cells, 0, 0, SIZE, SIZE); // blow back up
+  }
 
-    // 2) swap to the sprite
+  photo.onload = () => {
+    drawPixelated(1);
 
-    .to("#headshot", { opacity: 0, duration: 0.5 })
-    .to("#spritesheet", { opacity: 1, duration: 0.5 }, "<")
+    const state = { p: 0 }; // progress 0 -> 1, the tween animates this number
 
-    //two frames were the character has no mouth
-    .to("#spritesheet", {
-      backgroundPositionX: "15.385%",
-      ease: "steps(2)",
-      duration: 0.3,
-    })
+    // arrow bob: paused until the scroll reaches the very end
+    const bob = gsap.to(el.cueIcon, {
+      y: 10,
+      duration: 0.9,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      paused: true,
+    });
 
-    // bubble and sprite blowing
-    .to("#spritesheet", {
-      backgroundPositionX: "84.615%",
-      ease: "steps(9)",
-      duration: 6,
-    })
-    .to(
-      "#bubble",
-      {
-        opacity: 1,
-        duration: 0.1,
-      },
-      "<+=0.667",
-    )
-    .fromTo(
-      "#bubble",
-      { scale: 0.1 },
-      { scale: 1, transformOrigin: "48% 70%", ease: "none", duration: 6 },
-      "<",
-    )
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: ".sprite",
+          start: "top 10%",
+          end: "+=3000",
+          pin: true,
+          scrub: true,
+          markers: true,
+          refreshPriority: 1,
+          onUpdate: (self) => (self.progress === 1 ? bob.play() : bob.pause()),
+        },
+      })
+      // 1) pixelate
+      .to(state, {
+        p: 1,
+        ease: "none",
+        duration: 4,
+        onUpdate: () => drawPixelated(snap(Math.exp(Math.log(MAX_BLOCK) * state.p))),
+      })
+      .to(el.cue, { autoAlpha: 0, duration: 1, ease: "power2.out" }, "<")
 
-    // bubble pop
-    .to("#bubble", {
-      opacity: 0,
-    })
-    .to(
-      "#pop",
-      {
-        opacity: 1,
-        duration: 0.5,
-      },
-      "<",
-    )
-    .to(":root", { "--bg": "#F6F2FF", "--text": "#1B1033", duration: 2, ease: "none" }, "<")
-    .to(
-      "#spritesheet",
-      {
-        backgroundPositionX: "100%",
+      // 2) swap to the sprite
+
+      .to("#headshot", { opacity: 0, duration: 0.5 })
+      .to("#spritesheet", { opacity: 1, duration: 0.5 }, "<")
+
+      //two frames were the character has no mouth
+      .to("#spritesheet", {
+        backgroundPositionX: "15.385%",
         ease: "steps(2)",
-        duration: 2,
-      },
-      "<",
-    )
-    .fromTo(
-      "#pop",
-      { scale: 1.5 },
-      { scale: 1, transformOrigin: "50% 50%", ease: "power3.out", duration: 2 },
-      "<",
-    )
+        duration: 0.3,
+      })
 
-    //pop disappears
+      // bubble and sprite blowing
+      .to("#spritesheet", {
+        backgroundPositionX: "84.615%",
+        ease: "steps(9)",
+        duration: 6,
+      })
+      .to(
+        "#bubble",
+        {
+          opacity: 1,
+          duration: 0.1,
+        },
+        "<+=0.667",
+      )
+      .fromTo(
+        "#bubble",
+        { scale: 0.1 },
+        { scale: 1, transformOrigin: "48% 70%", ease: "none", duration: 6 },
+        "<",
+      )
 
-    .to("#pop", { opacity: 0, ease: "power2.out" }, "-=0.6")
+      // bubble pop
+      .to("#bubble", {
+        opacity: 0,
+      })
+      .to(
+        "#pop",
+        {
+          opacity: 1,
+          duration: 0.5,
+        },
+        "<",
+      )
+      .to(":root", { "--bg": "#F6F2FF", "--text": "#1B1033", duration: 2, ease: "none" }, "<")
+      .to(
+        "#spritesheet",
+        {
+          backgroundPositionX: "100%",
+          ease: "steps(2)",
+          duration: 2,
+        },
+        "<",
+      )
+      .fromTo(
+        "#pop",
+        { scale: 1.5 },
+        { scale: 1, transformOrigin: "50% 50%", ease: "power3.out", duration: 2 },
+        "<",
+      )
 
-    //stars appear
-    .fromTo(
-      ".star",
-      { scale: 0, opacity: 0 },
-      { scale: 1, opacity: 1, ease: "back.out(2)", duration: 0.5, stagger: 0.1 },
-      "-=0.3",
-    )
+      //pop disappears
 
-    // stars fall
-    .to(".star", {
-      y: "120vh",
-      rotation: (i) => (i % 2 ? 180 : -180),
-      // opacity:0,
-      ease: "bounce.in",
-      duration: 3,
-      stagger: 0.1,
-    })
+      .to("#pop", { opacity: 0, ease: "power2.out" }, "-=0.6")
 
-    // 4) scroll arrow: keep this LAST
-    .fromTo(el.scrollCue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
+      //stars appear
+      .fromTo(
+        ".star",
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, ease: "back.out(2)", duration: 0.5, stagger: 0.1 },
+        "-=0.3",
+      )
 
-  // This pin is created after experience.js already measured its start position,
-  // so re-order the triggers by page position and recalculate them now that the
-  // hero's +3000px pin spacer exists.
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-};
+      // stars fall
+      .to(".star", {
+        y: "120vh",
+        rotation: (i) => (i % 2 ? 180 : -180),
+        // opacity:0,
+        ease: "bounce.in",
+        duration: 3,
+        stagger: 0.1,
+      })
 
-photo.src = "./images/headshot.png"; // set last, after onload is attached
+      // 4) scroll arrow: keep this LAST
+      .fromTo(el.scrollCue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
+
+    // This pin is created after experience.js already measured its start position,
+    // so re-order the triggers by page position and recalculate them now that the
+    // hero's +3000px pin spacer exists.
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
+  };
+
+  photo.src = "./images/headshot.png"; // set last, after onload is attached
+})();

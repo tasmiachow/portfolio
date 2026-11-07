@@ -12,9 +12,12 @@
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
     <script defer src="js/hero.js"></script>
     <script defer src="js/about.js"></script>
     <script defer src="js/experience.js"></script>
+    <script defer src="js/projects.js"> </script>
+    <script defer src="js/contact.js"> </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -75,79 +78,101 @@
     </header>
 
     <!-- About Section -->
-  <section class="about" id="about">
-  <div class="about__stage">
+    <section class="about" id="about">
+      <div class="about__stage">
+        <h2 class="section__title">About Me</h2>
 
-    <h2 class="section__title">About Me</h2>
+        <!-- cards: hidden until their bubble is popped -->
+        <div class="about__grid">
+          <article class="about-card glass-card" id="card-education" aria-hidden="true">
+            <h3 class="card__title">Education</h3>
+            <p>
+              <span> Major: Computer Science </span> <br />
+              <span> Minor: Applied Mathematics</span> <br />
+              Graduated: January 2025
+            </p>
+          </article>
+          <article class="about-card glass-card" id="card-mission" aria-hidden="true">
+            <h3 class="card__title">Mission</h3>
+            <p>Build applications that are FUN and help solve a stanger's problem</p>
+          </article>
+          <article class="about-card glass-card" id="card-now" aria-hidden="true">
+            <h3 class="card__title">Where I am now</h3>
+            <p>
+              Student in CodePath AI Applied Engineering Course <br />
+              Product Engineer for SpectAgent <br />
+              Open to full-time positions
+            </p>
+          </article>
+          <article class="about-card glass-card" id="card-hobbies" aria-hidden="true">
+            <h3 class="card__title">Hobbies</h3>
+            <p>Running, drawing, and playing pickleball with my dad.</p>
+          </article>
+        </div>
 
-    <!-- cards: hidden until their bubble is popped -->
-    <div class="about__grid">
-      <article class="about-card glass-card" id="card-education" aria-hidden="true">
-        <h3 class="card__title">Education</h3>
-       <p>
-          <span> Major: Computer Science </span> <br />
-          <span> Minor: Applied Mathematics</span> <br />
-          Graduated: January 2025
-        </p>
-      </article>
-      <article class="about-card glass-card" id="card-mission" aria-hidden="true">
-        <h3 class="card__title">Mission</h3>
-         <p>Build applications that are FUN and help solve a stanger's problem</p>
-      </article>
-      <article class="about-card glass-card" id="card-now" aria-hidden="true">
-        <h3 class="card__title">Where I am now</h3>
-        <p>
-          Student in CodePath AI Applied Engineering Course <br />
-          Product Engineer for SpectAgent <br />
-          Open to full-time positions
-        </p>
-      </article>
-      <article class="about-card glass-card" id="card-hobbies" aria-hidden="true">
-        <h3 class="card__title">Hobbies</h3>
-        <p>Running, drawing, and playing pickleball with my dad.</p>
-      </article>
-    </div>
+        <!-- bubbles -->
+        <button
+          class="bubble"
+          type="button"
+          data-card="card-education"
+          aria-controls="card-education"
+          aria-expanded="false"
+          style="--x: 21%; --y: 52%; --size: clamp(190px, 23vw, 330px)"
+        >
+          <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="" />
+          <span class="bubble__label">Education</span>
+          <span class="bubble__hint">click to pop</span>
+        </button>
+        <button
+          class="bubble"
+          type="button"
+          data-card="card-mission"
+          aria-controls="card-mission"
+          aria-expanded="false"
+          style="--x: 45%; --y: 78%; --size: clamp(170px, 19vw, 280px)"
+        >
+          <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="" />
+          <span class="bubble__label">Mission</span>
+          <span class="bubble__hint">click to pop</span>
+        </button>
+        <button
+          class="bubble"
+          type="button"
+          data-card="card-now"
+          aria-controls="card-now"
+          aria-expanded="false"
+          style="--x: 68%; --y: 42%; --size: clamp(190px, 22vw, 320px)"
+        >
+          <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="" />
+          <span class="bubble__label">Right now</span>
+          <span class="bubble__hint">click to pop</span>
+        </button>
+        <button
+          class="bubble"
+          type="button"
+          data-card="card-hobbies"
+          aria-controls="card-hobbies"
+          aria-expanded="false"
+          style="--x: 86%; --y: 78%; --size: clamp(160px, 18vw, 270px)"
+        >
+          <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="" />
+          <span class="bubble__label">Hobbies</span>
+          <span class="bubble__hint">click to pop</span>
+        </button>
 
-    <!-- bubbles -->
-    <button class="bubble" type="button" data-card="card-education" aria-controls="card-education" aria-expanded="false"
-            style="--x: 21%; --y: 52%; --size: clamp(190px, 23vw, 330px)">
-      <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="">
-      <span class="bubble__label">Education</span>
-      <span class="bubble__hint">click to pop</span>
-    </button>
-    <button class="bubble" type="button" data-card="card-mission" aria-controls="card-mission" aria-expanded="false"
-            style="--x: 45%; --y: 78%; --size: clamp(170px, 19vw, 280px)">
-      <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="">
-      <span class="bubble__label">Mission</span>
-      <span class="bubble__hint">click to pop</span>
-    </button>
-    <button class="bubble" type="button" data-card="card-now" aria-controls="card-now" aria-expanded="false"
-            style="--x: 68%; --y: 42%; --size: clamp(190px, 22vw, 320px)">
-      <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="">
-      <span class="bubble__label">Right now</span>
-      <span class="bubble__hint">click to pop</span>
-    </button>
-    <button class="bubble" type="button" data-card="card-hobbies" aria-controls="card-hobbies" aria-expanded="false"
-            style="--x: 86%; --y: 78%; --size: clamp(160px, 18vw, 270px)">
-      <img class="bubble__img" src="./images/svgs/bubbleGum.svg" alt="">
-      <span class="bubble__label">Hobbies</span>
-      <span class="bubble__hint">click to pop</span>
-    </button>
-
-    <!-- one pop burst + stars, cloned into each bubble by JS -->
-    <template id="fx-template">
-      <span class="bubble__fx" aria-hidden="true">
-        <img class="fx__pop" src="./images/svgs/pop.svg" alt="">
-        <img class="fx__star" src="./images/svgs/star.svg" alt="">
-        <img class="fx__star" src="./images/svgs/star.svg" alt="">
-        <img class="fx__star" src="./images/svgs/star.svg" alt="">
-        <img class="fx__star" src="./images/svgs/star.svg" alt="">
-        <img class="fx__star" src="./images/svgs/star.svg" alt="">
-      </span>
-    </template>
-
-  </div>
-</section>
+        <!-- one pop burst + stars, cloned into each bubble by JS -->
+        <template id="fx-template">
+          <span class="bubble__fx" aria-hidden="true">
+            <img class="fx__pop" src="./images/svgs/pop.svg" alt="" />
+            <img class="fx__star" src="./images/svgs/star.svg" alt="" />
+            <img class="fx__star" src="./images/svgs/star.svg" alt="" />
+            <img class="fx__star" src="./images/svgs/star.svg" alt="" />
+            <img class="fx__star" src="./images/svgs/star.svg" alt="" />
+            <img class="fx__star" src="./images/svgs/star.svg" alt="" />
+          </span>
+        </template>
+      </div>
+    </section>
     <!-- Experience Section -->
 
     <section class="experience" id="experience">
@@ -401,83 +426,215 @@
             <h3 class="card__title">Halcyon Finance</h3>
             <p class="card__role">Software Engineer (Contract)</p>
           </article>
-        
-        <!-- Resume Button-->
-          <a class="resume-btn" id="resume-btn"
-              href="./assets/Tasmia_Chowdhury_Resume.pdf"
-              target="_blank" rel="noopener">
-              View Resume
-              <span aria-hidden="true">→</span>
+
+          <!-- Resume Button-->
+          <a
+            class="resume-btn"
+            id="resume-btn"
+            href="./assets/Tasmia_Chowdhury_Resume.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            View Resume
+            <span aria-hidden="true">→</span>
           </a>
-        
-        
         </div>
       </div>
-      
-
-
     </section>
 
-    <!--Projects-->
-    <section id="projects" class="projects">
-      <h1 class="section__title">Projects</h1>
+
+    <!--reuable icon svgs-->
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="icon-github" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"
+        />
+      </symbol>
+      <symbol id="icon-www" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="9.5" />
+          <path d="M2.5 12h19" />
+          <path d="M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5Z" />
+        </g>
+      </symbol>
+      <symbol id="icon-email" viewBox="0 0 24 24">
+  <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
+    <path d="m3 7 9 6.5L21 7" />
+  </g>
+</symbol>
+<symbol id="icon-linkedin" viewBox="0 0 24 24">
+  <path
+    fill="currentColor"
+    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125ZM7.119 20.452H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"
+  />
+</symbol>
+    </svg>
+
+    <section class="projects" id="projects">
+      <h2 class="section__title">Projects</h2>
+
+      <div class="gallery">
+        <ul class="project__list">
+          <li class="project-card glass-card">
+            <div class="project__media">
+              <video
+  
+                muted
+                loop
+                playsinline
+                poster="./images/projects/sentivest-poster.png"
+              >
+                <source src="./images/projects/sentivest.webm" type="video/webm" />
+              </video>
+            </div>
+            <h3 class="card__title">Sentivest</h3>
+            <p class="project__desc">
+              Analyzes tweets and news about your stocks with AI to rate the sentiment as positive,
+              neutral or negative.
+            </p>
+            <div class="project__links">
+              <a
+                href="https://github.com/tasmiachow/HackKnight"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Sentivest on GitHub"
+                ><svg width="22" height="22" aria-hidden="true"><use href="#icon-github" /></svg></a>
+              <a
+                href="https://sentivent-frontend.onrender.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Sentivest live site"
+                ><svg width="22" height="22" aria-hidden="true"><use href="#icon-www" /></svg></a>
+            </div>
+          </li>
+
+          <li class="project-card glass-card">
+            <div class="project__media">
+              <img src="./images/projects/linkUp.png" alt="LinkUp app screenshot" />
+            </div>
+            <h3 class="card__title">LinkUp</h3>
+            <p class="project__desc">
+              A web app that finds the fairest meetup spot between friends in New York City.
+            </p>
+            <div class="project__links">
+              <a
+                href="https://github.com/tasmiachow/DivHacks"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkUp on GitHub"
+                ><svg width="22" height="22" aria-hidden="true"><use href="#icon-github" /></svg></a>
+              <a
+                href="https://linkup-nyc-client.onrender.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkUp live site"
+                ><svg width="22" height="22" aria-hidden="true"><use href="#icon-www" /></svg></a>
+            </div>
+          </li>
+
+          <li class="project-card glass-card">
+            <div class="project__media">
+              <img src="./images/projects/hands2Words.png" alt="hands2Words app screenshot" />
+            </div>
+            <h3 class="card__title">hands2Words</h3>
+            <p class="project__desc">
+              An American Sign Language Learning Platform that translates 9+ ASL gestures into English from live video, in near
+              real-time.
+            </p>
+            <div class="project__links">
+              <a
+                href="https://github.com/tasmiachow/Capstone"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="hands2Words on GitHub"
+                ><svg width="22" height="22" aria-hidden="true"><use href="#icon-github" /></svg></a>
+            </div>
+          </li>
+
+          <li class="project-card glass-card">
+            <div class="project__media">
+              <video muted loop playsinline poster="./images/projects/jetGenie-poster.png">
+                <source src="./images/projects/jetGenie.webm" type="video/webm" />
+              </video>
+            </div>
+            <h3 class="card__title">JetGenie</h3>
+            <p class="project__desc">
+              A smart travel planner that helps you plan your trip from start to finish with ease.
+            </p>
+            <div class="project__links">
+              <a
+                href="https://github.com/tasmiachow/JetGenie"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="JetGenie on GitHub"
+              ><svg width="22" height="22" aria-hidden="true"><use href="#icon-github" /></svg></a>
+            </div>
+          </li>
+
+          <li class="project-card glass-card">
+            <div class="project__media">
+              <video muted loop playsinline poster="./images/projects/cogPath-poster.png">
+                <source src="./images/projects/cogPath.webm" type="video/webm" />
+              </video>
+            </div>
+            <h3 class="card__title">CogPath</h3>
+            <p class="project__desc">
+              Bite-sized cognitive games that train memory, attention and problem-solving, with
+              charts to track your progress.
+            </p>
+            <div class="project__links">
+              <a
+                href="https://github.com/tasmiachow/codepath-capstone"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="CogPath on GitHub"
+                ><svg width="22" height="22" aria-hidden="true"><use href="#icon-github" /></svg></a>
+              <a
+                href="https://cogpath-frontend.onrender.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="CogPath live site"
+                ><svg width="22" height="22" aria-hidden="true"><use href="#icon-www" /></svg></a>
+            </div>
+          </li>
+        </ul>
+
+        <div class="actions">
+          <button class="prev" type="button" aria-label="Previous project">←</button>
+          <button class="next" type="button" aria-label="Next project">→</button>
+        </div>
+      </div>
+
+      <div class="drag-proxy"></div>
     </section>
 
     <!--Contact-->
 
-    <footer>
-      <div class="contact" id="contact">
-        <!-- Contact content container-->
-        <div class="content">
-          <h1>Contact Me</h1>
-          <!-- Contact Section title -->
-          <!-- Contact Section Description -->
-          <h3 onclick="copyEmail(event)">chowtasmia@gmail.com</h3>
-          <div class="social-icons">
-            <a
-              href="mailto:chowtasmia@gmail.com?subject=Hello%20Tasmia&body=Just%20wanted%20to%20reach%20out!"
-              title="Click to email me."
-              onclick="copyEmail(event)"
-            >
-              <img
-                src="./images/SocialMedia/email.png"
-                alt="Email icon"
-                id="email-icon"
-                style="cursor: pointer"
-              />
-            </a>
+   <footer class="contact" id="contact">
+      <h2 class="contact__title">Let's talk</h2>
+      <button class="contact__email" type="button" id="copy-email">
+        chowtasmia@gmail.com
+        <span class="contact__copied" id="copied-msg" role="status" aria-live="polite">Copied!</span>
+      </button>
 
-            <!-- Copied Message -->
-            <span id="copied-msg" style="margin: 10px; color: rgb(51, 113, 236); display: none"
-              >Copied!</span
-            >
+      <ul class="contact__links">
+        <li><a class="icon-link" href="mailto:chowtasmia@gmail.com?subject=Hello%20Tasmia" aria-label="Email me">
+          <svg class="icon" aria-hidden="true"><use href="#icon-email"/></svg></a></li>
+        <li><a class="icon-link" href="https://www.linkedin.com/in/tasmiachow/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg class="icon" aria-hidden="true"><use href="#icon-linkedin"/></svg></a></li>
+        <li><a class="icon-link" href="https://github.com/tasmiachow" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg></a></li>
+      </ul>
+  </footer>
 
-            <!-- Social Media Links 
-          https://www.flaticon.com/ -->
-
-            <a href="https://www.linkedin.com/in/tasmiachow/" target="_blank">
-              <img src="./images/SocialMedia/linkedin.png" alt="LinkedIn" />
-            </a>
-            <a href="https://github.com/tasmiachow" target="_blank">
-              <img src="./images/SocialMedia/github.png" alt="GitHub" />
-            </a>
-          </div>
-          <br />
-        </div>
-      </div>
-    </footer>
-
-    <script>
-      function copyEmail(event) {
-        navigator.clipboard.writeText("chowtasmia@gmail.com").then(() => {
-          const msg = document.getElementById("copied-msg");
-          msg.style.display = "inline";
-          setTimeout(() => {
-            msg.style.display = "none";
-          }, 1000);
-        });
-        // Let the mailto: continue to work (don’t call event.preventDefault)
-      }
-    </script>
   </body>
 </html>
