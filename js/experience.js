@@ -102,6 +102,6 @@
     invalidateOnRefresh: true,
     refreshPriority: 0,
     onUpdate: (self) => (reduceMotion ? renderStatic : render)(self.progress),
-    markers: true,
+    // markers: true,
   });
 })();

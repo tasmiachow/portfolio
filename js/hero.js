@@ -127,7 +127,7 @@
           end: "+=3000",
           pin: true,
           scrub: true,
-          markers: true,
+          // markers: true,
           refreshPriority: 1,
           onUpdate: (self) => (self.progress === 1 ? bob.play() : bob.pause()),
         },
