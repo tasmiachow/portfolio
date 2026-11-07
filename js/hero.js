@@ -131,6 +131,10 @@
       paused: true,
     });
 
+    // later tweens on an already-animated property: don't apply their start
+    // values when the timeline is built, or they'd overwrite the starting look
+    const later = { immediateRender: false };
+
     gsap
       .timeline({
         scrollTrigger: {
@@ -144,6 +148,12 @@
           onUpdate: (self) => (self.progress === 1 ? bob.play() : bob.pause()),
         },
       })
+      // Every step is a fromTo with explicit start values. Plain .to() records its
+      // start the first time it plays; on an iPhone reload the timeline can jump
+      // ahead once before settling at the top, so .to() tweens recorded the wrong
+      // start and the pop vector / dark text stayed stuck on screen.
+      // Later tweens on an already-animated property use `later` (see above).
+
       // 1) pixelate
       .to(state, {
         p: 1,
@@ -151,35 +161,27 @@
         duration: 4,
         onUpdate: () => drawPixelated(blockFor(state.p)),
       })
-      .to(el.cue, { autoAlpha: 0, duration: 1, ease: "power2.out" }, "<")
+      // the intro also animates the cue, so don't set it at build time
+      .fromTo(el.cue, { autoAlpha: 1 }, { autoAlpha: 0, duration: 1, ease: "power2.out", ...later }, "<")
 
       // 2) swap to the sprite
-
-      // fromTo so both ends are explicit: scrubbing back always restores the face
       .fromTo("#headshot", { opacity: 1 }, { opacity: 0, duration: 0.5 })
       .fromTo("#spritesheet", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "<")
 
-      //two frames were the character has no mouth
-      .to("#spritesheet", {
-        backgroundPositionX: "15.385%",
-        ease: "steps(2)",
-        duration: 0.3,
-      })
+      // two frames where the character has no mouth
+      .fromTo(
+        "#spritesheet",
+        { backgroundPositionX: "0%" },
+        { backgroundPositionX: "15.385%", ease: "steps(2)", duration: 0.3 },
+      )
 
       // bubble and sprite blowing
-      .to("#spritesheet", {
-        backgroundPositionX: "84.615%",
-        ease: "steps(9)",
-        duration: 6,
-      })
-      .to(
-        "#bubble",
-        {
-          opacity: 1,
-          duration: 0.1,
-        },
-        "<+=0.667",
+      .fromTo(
+        "#spritesheet",
+        { backgroundPositionX: "15.385%" },
+        { backgroundPositionX: "84.615%", ease: "steps(9)", duration: 6, ...later },
       )
+      .fromTo("#bubble", { opacity: 0 }, { opacity: 1, duration: 0.1 }, "<+=0.667")
       .fromTo(
         "#bubble",
         { scale: 0.1 },
@@ -188,25 +190,18 @@
       )
 
       // bubble pop
-      .to("#bubble", {
-        opacity: 0,
-      })
-      .to(
-        "#pop",
-        {
-          opacity: 1,
-          duration: 0.5,
-        },
+      .fromTo("#bubble", { opacity: 1 }, { opacity: 0, ...later })
+      .fromTo("#pop", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "<")
+      .fromTo(
+        ":root",
+        { "--mesh": 0, "--text": "#f7eeff" },
+        { "--mesh": 1, "--text": "#1B1033", duration: 2, ease: "none" },
         "<",
       )
-      .to(":root", { "--mesh": 1, "--text": "#1B1033", duration: 2, ease: "none" }, "<")
-      .to(
+      .fromTo(
         "#spritesheet",
-        {
-          backgroundPositionX: "100%",
-          ease: "steps(2)",
-          duration: 2,
-        },
+        { backgroundPositionX: "84.615%" },
+        { backgroundPositionX: "100%", ease: "steps(2)", duration: 2, ...later },
         "<",
       )
       .fromTo(
@@ -216,11 +211,10 @@
         "<",
       )
 
-      //pop disappears
+      // pop disappears
+      .fromTo("#pop", { opacity: 1 }, { opacity: 0, ease: "power2.out", ...later }, "-=0.6")
 
-      .to("#pop", { opacity: 0, ease: "power2.out" }, "-=0.6")
-
-      //stars appear
+      // stars appear
       .fromTo(
         ".star",
         { scale: 0, opacity: 0 },
@@ -229,14 +223,18 @@
       )
 
       // stars fall
-      .to(".star", {
-        y: "120vh",
-        rotation: (i) => (i % 2 ? 180 : -180),
-        // opacity:0,
-        ease: "bounce.in",
-        duration: 3,
-        stagger: 0.1,
-      })
+      .fromTo(
+        ".star",
+        { y: 0, rotation: 0 },
+        {
+          y: "120vh",
+          rotation: (i) => (i % 2 ? 180 : -180),
+          ease: "bounce.in",
+          duration: 3,
+          stagger: 0.1,
+          ...later,
+        },
+      )
 
       // 4) scroll arrow: keep this LAST
       .fromTo(el.scrollCue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
