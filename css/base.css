@@ -46,7 +46,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* no scroll-behavior: smooth — it fights ScrollTrigger's refresh (which jumps
+     the scroll position to measure pins) and breaks the scrubbed hero */
   /* body's overflow-x alone doesn't stop sideways panning on phones */
   overflow-x: clip;
 }

@@ -32,23 +32,29 @@
     autoAlpha: 1,
     ease: "back.out(1.7)",                                    
     duration: 0.8,
-    stagger: 0.15,                                 
-    scrollTrigger: { trigger: aboutEl.section, start: "top 50%", once: true },  
-    onComplete: startFloating,
+    // each bubble starts floating as soon as ITS entrance ends (not after all four),
+    // so the first bubble (Education) can be popped right away
+    stagger: {
+      each: 0.15,
+      onComplete() {
+        startFloating(this.targets()[0]);
+      },
+    },
+    scrollTrigger: { trigger: aboutEl.section, start: "top 50%", once: true },
   });
 
   // 4) idle float
   const floats = [];
-  function startFloating() {
-    aboutEl.bubbles.forEach((bubble, i) => {
-      floats[i] = gsap.to(bubble, {
-        y: -15,                                   
-        duration: gsap.utils.random(1,2),                            
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        delay: i * 0.3,                               
-      });
+  function startFloating(bubble) {
+    const i = aboutEl.bubbles.indexOf(bubble);
+    if (bubble.getAttribute("aria-expanded") === "true") return; // already popped
+    floats[i] = gsap.to(bubble, {
+      y: -15,
+      duration: gsap.utils.random(1, 2),
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: i * 0.3,
     });
   }
     // 5) click to pop
@@ -60,7 +66,9 @@
 
   function pop(bubble, i) {
     // console.log(i, floats);
-    floats[i].kill();                                  
+    floats[i]?.kill();                 // may not exist yet if clicked mid-entrance
+    gsap.killTweensOf(bubble, "scale,autoAlpha,opacity,visibility"); // stop its entrance
+    gsap.set(bubble, { scale: 1, autoAlpha: 1 });
 
     const card = document.getElementById(bubble.dataset.card);       
     const body  = bubble.querySelectorAll(".bubble__img, .bubble__label, .bubble__hint");

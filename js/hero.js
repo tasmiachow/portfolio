@@ -86,6 +86,7 @@
   }
 
   function drawPixelated(block) {
+    if (!photo.naturalWidth) return; // not loaded yet; onload draws it
     const cells = SIZE / block;
     off.width = off.height = cells;
     octx.imageSmoothingEnabled = true;
@@ -95,9 +96,17 @@
     ctx.drawImage(off, 0, 0, cells, cells, 0, 0, SIZE, SIZE); // blow back up
   }
 
-  photo.onload = () => {
-    drawPixelated(1);
+  const state = { p: 0 }; // progress 0 -> 1, the tween animates this number
+  const blockFor = (p) => snap(Math.exp(Math.log(MAX_BLOCK) * p));
 
+  // Draw whatever block size the scroll position currently calls for.
+  photo.onload = () => drawPixelated(blockFor(state.p));
+
+  // Build the scroll animation right away (not inside photo.onload). On a real
+  // server the image arrives late, and creating the pin then inserts a 3000px
+  // spacer + forces a refresh while the visitor may already be further down,
+  // which leaves the hero timeline out of sync and it won't reverse.
+  (() => {
     // reduced motion: no pin, no pixelate/bubble/stars. Jump straight to the
     // light theme so the sections below look right, and show the scroll arrow.
     if (reduceMotion) {
@@ -106,8 +115,6 @@
       gsap.set(el.scrollCue, { autoAlpha: 1 });
       return;
     }
-
-    const state = { p: 0 }; // progress 0 -> 1, the tween animates this number
 
     // arrow bob: paused until the scroll reaches the very end
     const bob = gsap.to(el.cueIcon, {
@@ -137,7 +144,7 @@
         p: 1,
         ease: "none",
         duration: 4,
-        onUpdate: () => drawPixelated(snap(Math.exp(Math.log(MAX_BLOCK) * state.p))),
+        onUpdate: () => drawPixelated(blockFor(state.p)),
       })
       .to(el.cue, { autoAlpha: 0, duration: 1, ease: "power2.out" }, "<")
 
@@ -228,12 +235,10 @@
       // 4) scroll arrow: keep this LAST
       .fromTo(el.scrollCue, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
 
-    // This pin is created after experience.js already measured its start position,
-    // so re-order the triggers by page position and recalculate them now that the
-    // hero's +3000px pin spacer exists.
+    // hero.js runs before experience.js, so triggers are already created in page
+    // order. sort() is just a safety net; ScrollTrigger refreshes itself on load.
     ScrollTrigger.sort();
-    ScrollTrigger.refresh();
-  };
+  })();
 
   photo.src = "./images/headshot.png"; // set last, after onload is attached
 })();
