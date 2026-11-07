@@ -1,22 +1,27 @@
 /* ===========================================================
-  Tools & Contact Section 
+  Tools & Contact Section
+  Tools reuses the contact layout so the two read as one closing block:
+  big break after Projects -> Tools -> small gap -> Contact
   =============================================================*/
+.tools {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1.25rem;
+  padding: clamp(5rem, 12vh, 9rem) 1.5rem 0; /* top = space after the projects gallery */
+  text-align: center;
+}
+
 .badge-container {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
   justify-content: center;
+  max-width: 720px; /* wraps into a neat centered block instead of one long row */
 }
 
 .badge-container img {
   height: 28px; /* standard height boost, remove or set to auto if default height is fine */
   width: auto;
-}
-
-
-.tool__title{
-    padding-left: var(--text-inset);
 }
 
 .small__title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 400;
@@ -26,7 +31,7 @@
 
 .contact {
   display: flex; flex-direction: column; align-items: center;
-  gap: 1.25rem; padding: 6rem 1.5rem 4rem; text-align: center;
+  gap: 1.25rem; padding: clamp(3rem, 6vh, 4rem) 1.5rem 4rem; text-align: center;
   color: var(--navy);
 }
 
@@ -50,12 +55,32 @@
 }
 .icon-link:hover, .icon-link:focus-visible { transform: translateY(-3px) scale(1.06); }
 .icon { width: 22px; height: 22px; }
-/* small screens: long email address shouldn't push past the edge */
+/* small screens: tighter spacing, and the long email address shouldn't push past the edge */
 @media (max-width: 700px) {
+  .tools {
+    padding: 4rem 1.25rem 0;
+  }
+  .badge-container {
+    gap: 6px;
+  }
+  .badge-container img {
+    height: 24px;
+  }
   .contact {
-    padding: 4rem 1.25rem 3rem;
+    padding: 2.5rem 1.25rem 3rem;
   }
   .contact__email {
     overflow-wrap: anywhere;
+  }
+}
+
+
+/* short landscape phones: vh-based gaps get tiny, so use fixed values */
+@media (max-height: 560px) and (orientation: landscape) {
+  .tools {
+    padding-top: 4rem;
+  }
+  .contact {
+    padding-top: 2.5rem;
   }
 }
