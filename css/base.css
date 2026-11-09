@@ -4,7 +4,7 @@
 :root {
   /*Dark Pallete */
   /* Palette */
-  --bg: #0e0720;
+  --bg: #0c051d;
   --glow-purple: #7a3cff;
   --mint: #d9fee1;
   --glow-pink: #ff2e93;
@@ -95,8 +95,8 @@ body::before,
 body::before {
   background:
     radial-gradient(55vmax 45vmax at 15% 20%, rgb(122 60 255 / 0.35), transparent 70%),
-    radial-gradient(50vmax 40vmax at 88% 30%, rgb(255 46 147 / 0.22), transparent 70%),
-    radial-gradient(60vmax 45vmax at 55% 105%, rgb(122 60 255 / 0.28), transparent 70%),
+    radial-gradient(50vmax 40vmax at 88% 30%, rgba(178, 46, 255, 0.22), transparent 70%),
+    radial-gradient(60vmax 45vmax at 55% 105%, rgba(60, 105, 255, 0.28), transparent 70%),
     var(--bg);
 }
 

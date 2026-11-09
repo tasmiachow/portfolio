@@ -34,8 +34,8 @@
 
 .greeting__style {
   font-family: var(--font-pixel);
-  font-weight: 600;
-  font-size: clamp(1.3rem, 2.9vw, 2.5rem);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2.9vw, 2.7rem);
   letter-spacing: 0.16em;
   color: var(--text);
   text-transform: uppercase;
@@ -61,8 +61,9 @@
   font-family: var(--font-sans);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-size: clamp(1.1rem, 2.6vw, 2.2rem);
+  font-size: clamp(1.1rem, 2.6vw, 2rem);
   color: var(--accent);
+  
 }
 
 
