@@ -85,43 +85,32 @@ function updateActive() {
   moveTo(0);
   updateActive();                                
 
-  // paste buildSeamlessLoop from the pen here, unchanged
+  // Builds a timeline exactly one card-cycle long (items.length * spacing) that scrubs a
+  // longer "raw" sequence of staggered card animations. The pen's version assumed lots of
+  // cards; with only a few, one of its tweens got a negative duration, which made the loop
+  // longer than a cycle so snap points landed between cards. This version works for any count.
+  // Note: needs items.length * spacing >= 1 (each card animation is 1s long), or copies overlap.
   function buildSeamlessLoop(items, spacing, animateFunc) {
-	let overlap = Math.ceil(1 / spacing), // number of EXTRA animations on either side of the start/end to accommodate the seamless looping
-		startTime = items.length * spacing + 0.5, // the time on the rawSequence at which we'll start the seamless loop
-		loopTime = (items.length + overlap) * spacing + 1, // the spot at the end where we loop back to the startTime
-		rawSequence = gsap.timeline({paused: true}), // this is where all the "real" animations live
-		seamlessLoop = gsap.timeline({ // this merely scrubs the playhead of the rawSequence so that it appears to seamlessly loop
-			paused: true,
-			repeat: -1, // to accommodate infinite scrolling/looping
-			onRepeat() { // works around a super rare edge case bug that's fixed GSAP 3.6.1
-				this._time === this._dur && (this._tTime += this._dur - 0.01);
-			}
-		}),
-		l = items.length + overlap * 2,
-		time, i, index;
+    const n = items.length;
+    const cycle = n * spacing;
+    // card 0 is centered at raw time i*spacing + 0.5 for any i that is a multiple of n.
+    // Start at least 1s in so every card that should be on screen has a copy already running.
+    const startTime = Math.ceil(0.5 / cycle) * cycle + 0.5;
+    const endTime = startTime + cycle;
+    const count = Math.ceil(endTime / spacing) + 1; // enough copies to cover the right edge too
 
-	// now loop through and create all the animations in a staggered fashion. Remember, we must create EXTRA animations at the end to accommodate the seamless looping.
-	for (i = 0; i < l; i++) {
-		index = i % items.length;
-		time = i * spacing;
-		rawSequence.add(animateFunc(items[index]), time);
-		i <= items.length && seamlessLoop.add("label" + i, time); // we don't really need these, but if you wanted to jump to key spots using labels, here ya go.
-	}
+    const rawSequence = gsap.timeline({ paused: true });
+    for (let i = 0; i < count; i++) {
+      rawSequence.add(animateFunc(items[i % n]), i * spacing);
+    }
+    rawSequence.time(startTime);
 
-	// here's where we set up the scrubbing of the playhead to make it appear seamless.
-	rawSequence.time(startTime);
-	seamlessLoop.to(rawSequence, {
-		time: loopTime,
-		duration: loopTime - startTime,
-		ease: "none"
-	}).fromTo(rawSequence, {time: overlap * spacing + 1}, {
-		time: startTime,
-		duration: startTime - (overlap * spacing + 1),
-		immediateRender: false,
-		ease: "none"
-	});
-	return seamlessLoop;
-}
+    // no repeat: callers wrap the time into [0, cycle) themselves
+    return gsap.timeline({ paused: true }).fromTo(
+      rawSequence,
+      { time: startTime },
+      { time: endTime, duration: cycle, ease: "none", immediateRender: false }
+    );
+  }
 
 })();
