@@ -1,5 +1,5 @@
 # Portfolio Website 
-This portfolio blends modern elements with the retro pixel aesthetic. I wanted the site to showcase my current accolade but also feel **lively**.  
+This portfolio blends modern elements with the retro pixel aesthetic. I wanted the site to showcase my accolades but also feel **lively**.  
 It starts unassuming with a standard headshot but as you scroll you're greeted with a warm character, bubblegum, and a pop!  
 Hopefully it was fun for you to scroll through and you learned a little more about me.
 
