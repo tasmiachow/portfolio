@@ -52,4 +52,9 @@ Behance poster: https://www.behance.net/gallery/130683597/Semihalf-rebranding/mo
 Procreate pixel brush tutorial: https://www.youtube.com/watch?v=tPQTGC5-_Is&list=PLDcc58dVCf2Y <br>
 Scroll Trigger Inspiration: https://pin.it/5xk5W7IJE
 
-
+## License
+This project is open-source under the MIT License. Feel free to use or modify the code, but kindly give credit where applicable. <br>
+<p align="center"> 
+MIT License <br>  
+Copyright (c) 2026 Tasmia Chowdhury
+</p>
