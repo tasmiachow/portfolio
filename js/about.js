@@ -31,7 +31,7 @@
     scale: 1,
     autoAlpha: 1,
     ease: "power2.in",                                    
-    duration: 0.8,
+    duration: 0.5,
     // each bubble starts floating as soon as ITS entrance ends (not after all four),
     // so the first bubble (Education) can be popped right away
     stagger: {
@@ -107,7 +107,7 @@
           ease: "back.out(2)", duration: 0.5, stagger: 0.04 },
         "<-0.2")
       .to(stars, { y: "+=220", rotation: (j) => (j % 2 ? 180 : -180),
-                   autoAlpha: 0, ease: "power1.in", duration: 0.9, stagger: 0.04 })
+                   autoAlpha: 0, ease: "power1.in", duration: 0.5, stagger: 0.04 })
 
       // the card lands in the grid
       .fromTo(card, { autoAlpha: 0, scale: 0.96, y: 20 },
