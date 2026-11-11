@@ -1,8 +1,8 @@
 # Portfolio Website 
-<p> This portfolio blends modern elements with the retro pixel aesthetic. I wanted the site to showcase my accolades but also feel <strong>lively</strong>. It starts unassuming with a standard headshot but as you scroll you're greeted with a warm character, bubblegum, and a pop! Hopefully it was fun for you to scroll through and you learned a little more about me. </p>
+<p> This portfolio blends modern elements with a retro pixel aesthetic. I wanted the site to showcase my accolades but also feel <strong>lively</strong>. It starts unassuming with a standard headshot, but as you scroll you're greeted with a warm character, bubblegum, and a pop! Hopefully the site was fun for you to scroll through and you learned a little more about me. </p>
 
 ## The Visual Inspiration & Concept:
-It was directly inspired by a typography poster on [behance](https://www.behance.net/gallery/130683597/Semihalf-rebranding/modules/740259299?utm_source=Pinterest&utm_medium=organic). I found it while scrolling through Pinterest and the blend of modernism with pixelation inspired me. Since I am currently working on a larger pixel project, where I’m (spending endless hours drawing city backgrounds 😅), bringing that aesthetic into my portfolio felt like the perfect bridge between my code and a current art style I'm exploring. I also found this cute scrollTrigger concept which was a massive inspiration for this build. Unfortunately, I can't find the original creator, but here is the [Pinterest Video](https://pin.it/5xk5W7IJE)
+It was directly inspired by a typography poster on [behance](https://www.behance.net/gallery/130683597/Semihalf-rebranding/modules/740259299?utm_source=Pinterest&utm_medium=organic). I found it while scrolling through Pinterest and the blend of modernism with pixelation spoke to me. Since I am currently working on a larger pixel project, where I’m (spending endless hours drawing city backgrounds 😅), bringing that aesthetic into my portfolio felt like the perfect bridge between my code and a current art style I'm exploring. I also found this cute scrollTrigger concept which was a massive inspiration for this build. Unfortunately, I can't find the original creator, but here is the [Pinterest Video](https://pin.it/5xk5W7IJE)
 
 ## The Process:
 This site went through many iterations and ideations to get to where it is. 
@@ -26,7 +26,7 @@ I animated everything, and when I say everything — I mean everything! Then I s
 </div>
 
 
-3. **Current State:** I reduced the amount of animations and made most of them tied to user interaction. The last step was redesigning the hero to tell a story with GSAP’s scroll trigger. 
+3. **Current State:** I reduced the amount of animations and made most of them tied to user interaction. The last step was redesigning the hero to tell a story through a scroll. 
 
 <div align="center">
     <img src = "./readmeImages/site.gif" width="400" />
