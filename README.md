@@ -1,13 +1,8 @@
 # Portfolio Website 
-This portfolio blends modern elements with the retro pixel aesthetic. I wanted the site to showcase my accolades but also feel **lively**.  
-It starts unassuming with a standard headshot but as you scroll you're greeted with a warm character, bubblegum, and a pop!  
-Hopefully it was fun for you to scroll through and you learned a little more about me.
+<p> This portfolio blends modern elements with the retro pixel aesthetic. I wanted the site to showcase my accolades but also feel **lively**.It starts unassuming with a standard headshot but as you scroll you're greeted with a warm character, bubblegum, and a pop! Hopefully it was fun for you to scroll through and you learned a little more about me. </p>
 
 ## The Visual Inspiration & Concept:
-It was directly inspired by a typography poster on [behance](https://www.behance.net/gallery/130683597/Semihalf-rebranding/modules/740259299?utm_source=Pinterest&utm_medium=organic). I found it while scrolling through Pinterest and the blend of modernism   
-with pixelation spoke to me. Since I am currently working on a larger pixel project, where I’m (spending endless hours drawing city backgrounds 😅),  
-bringing that aesthetic into my portfolio felt like the perfect bridge between my code and a current art style I'm exploring.  
-I also found this cute scrollTrigger concept which was again a massive inspiration for this build. Unfortunately, I can't find the original creator, but here is the [Pinterest Video](https://pin.it/5xk5W7IJE)
+It was directly inspired by a typography poster on [behance](https://www.behance.net/gallery/130683597/Semihalf-rebranding/modules/740259299?utm_source=Pinterest&utm_medium=organic). I found it while scrolling through Pinterest and the blend of modernism with pixelation inspired me. Since I am currently working on a larger pixel project, where I’m (spending endless hours drawing city backgrounds 😅), bringing that aesthetic into my portfolio felt like the perfect bridge between my code and a current art style I'm exploring. I also found this cute scrollTrigger concept which was a massive inspiration for this build. Unfortunately, I can't find the original creator, but here is the [Pinterest Video](https://pin.it/5xk5W7IJE)
 
 ## The Process:
 This site went through many iterations and ideations to get to where it is. 
@@ -38,7 +33,7 @@ I animated everything, and when I say everything — I mean everything! Then I s
 </div>
 
 ## The Artwork:
-Every frame and vector illustration on this site is hand-drawn by me in Procreate and Figma  
+Every frame and vector illustration on this site is **hand-drawn** by me in Procreate and Figma  
 <p align="center"> <strong>No generative AI artwork. </strong></p>
 
 The only exceptions are standard utility icons (GitHub, LinkedIn, email) and arrow symbols. I wanted this site to  
@@ -50,7 +45,7 @@ your face :)
     <img src = "./readmeImages/sprite.gif" width="400" />
 </div>
 
-*This gif may or may not include the character design for my bigger pixel project 😄*
+*This gif may or may not include the character design for my larger pixel project 😄*
 
 ## Tech stack and Scope Creep: 
 I initially thought this was going to be a quick, small page, so I opted for vanilla HTML, CSS, JavaScript, and GSAP to drill my core fundamentals and estimated I would finish within 3 days. As the project kept getting redesigned, I ended up writing a lot of reusable component logic and was humbly reminded why tools like Tailwind exist 🤣. Still, keeping every section in its own dedicated JS and CSS file keeps the repo modular and readable and I hope it is useful to you! 
