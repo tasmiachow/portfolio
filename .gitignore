@@ -18,3 +18,7 @@ desktop.ini
 .vscode/*
 !.vscode/settings.json
 .idea/
+
+
+# playwright tests
+./recordings

@@ -33,13 +33,24 @@ I animated everything, and when I say everything — I mean everything! Then I s
 
 3. **Current State:** I reduced the amount of animations and made most of them tied to user interaction. The last step was redesigning the hero to tell a story with GSAP’s scroll trigger. 
 
+<div align="center">
+    <img src = "./readmeImages/site.gif" width="400" />
+</div>
+
 ## The Artwork:
 Every frame and vector illustration on this site is hand-drawn by me in Procreate and Figma  
-<p align="center"> <strong>No generative AI artwork. </strong></p>  
+<p align="center"> <strong>No generative AI artwork. </strong></p>
+
 The only exceptions are standard utility icons (GitHub, LinkedIn, email) and arrow symbols. I wanted this site to  
 genuinely reflect my personal craft. The illustrations took quite a bit of time 😅, but I hope they put a smile on  
-your face :)
+your face :)  
+**Small** clip of artwork creation for sprite:
 
+<div align="center">
+    <img src = "./readmeImages/sprite.gif" width="400" />
+</div>
+
+*This gif may or may not include the character design for my bigger pixel project 😄*
 
 ## Tech stack and Scope Creep: 
 I initially thought this was going to be a quick, small page, so I opted for vanilla HTML, CSS, JavaScript, and GSAP to drill my core fundamentals and estimated I would finish within 3 days. As the project kept getting redesigned, I ended up writing a lot of reusable component logic and was humbly reminded why tools like Tailwind exist 🤣. Still, keeping every section in its own dedicated JS and CSS file keeps the repo modular and readable and I hope it is useful to you! 
