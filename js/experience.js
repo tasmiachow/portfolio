@@ -29,7 +29,7 @@
 
   gsap.set(expEl.cards, { autoAlpha: 0, y: 24 });
 
-  const leafOrigins = ["514 508", "1049 463", "2021 407", "2954 499", "3921 470", "4584 268"];
+  const leafOrigins = ["514 508", "1049 463", "2021 407", "3921 470", "4584 268"];
 
   expEl.leaves.forEach((leaf, i) => {
     gsap.set(leaf, { scale: 0, svgOrigin: leafOrigins[i] });
@@ -42,7 +42,7 @@
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const smooth = (k) => k * k * (3 - 2 * k);
 
-  const leafStart = [0.06, 0.12, 0.33, 0.54, 0.86, 0.95]; // from my table
+  const leafStart = [0.06, 0.12, 0.33, 0.86, 0.95];
   const cardStart = [0.06, 0.12, 0.33, 0.54, 0.86];
 
   function render(p) {
