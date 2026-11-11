@@ -37,6 +37,8 @@
   display: flex; flex-direction: column; align-items: center;
   gap: 1.25rem; padding: clamp(3rem, 6vh, 4rem) 1.5rem 4rem; text-align: center;
   color: var(--navy);
+  width: 100%;
+  margin-top: clamp(4rem, 10vh, 8rem);
 }
 
 
