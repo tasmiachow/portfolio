@@ -1,5 +1,5 @@
 # Portfolio Website 
-<p> This portfolio blends modern elements with the retro pixel aesthetic. I wanted the site to showcase my accolades but also feel **lively**.It starts unassuming with a standard headshot but as you scroll you're greeted with a warm character, bubblegum, and a pop! Hopefully it was fun for you to scroll through and you learned a little more about me. </p>
+<p> This portfolio blends modern elements with the retro pixel aesthetic. I wanted the site to showcase my accolades but also feel <strong>lively</strong>. It starts unassuming with a standard headshot but as you scroll you're greeted with a warm character, bubblegum, and a pop! Hopefully it was fun for you to scroll through and you learned a little more about me. </p>
 
 ## The Visual Inspiration & Concept:
 It was directly inspired by a typography poster on [behance](https://www.behance.net/gallery/130683597/Semihalf-rebranding/modules/740259299?utm_source=Pinterest&utm_medium=organic). I found it while scrolling through Pinterest and the blend of modernism with pixelation inspired me. Since I am currently working on a larger pixel project, where I’m (spending endless hours drawing city backgrounds 😅), bringing that aesthetic into my portfolio felt like the perfect bridge between my code and a current art style I'm exploring. I also found this cute scrollTrigger concept which was a massive inspiration for this build. Unfortunately, I can't find the original creator, but here is the [Pinterest Video](https://pin.it/5xk5W7IJE)
@@ -19,7 +19,7 @@ This site went through many iterations and ideations to get to where it is.
 </div>
 
 2. **Second Attempt:** I ditched the original cream color scheme, pivoted, and went full-send into the animation. So  
-I animated everything, and when I say everything — I mean everything! Then I suddenly came across an article from Lottie about how having too many animations is a bit… distracting 😅
+I animated everything, and when I say everything — I mean everything! Then I suddenly came across an article from [Lordicon](https://lordicon.com/blog/too-much-motion-hurts-ux-heres-why) about how having too many animations is a bit… distracting 😅
 
 <div align="center">
     <img src = "./readmeImages/v2.gif" width="400" />
