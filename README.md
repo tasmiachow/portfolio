@@ -7,7 +7,7 @@ It was directly inspired by a typography poster on [behance](https://www.behance
 ## The Process:
 This site went through many iterations and ideations to get to where it is. 
 
-1. **First Attempt:**:  I was inspired by “the old money theme”. But every animation kept fighting the antiquated UI. 
+1. **First Attempt:** I was inspired by “the old money theme”. But every animation kept fighting the antiquated UI. 
 
 <div align="center">
 
@@ -55,7 +55,7 @@ I initially thought this was going to be a quick, small page, so I opted for van
 A special thanks to the GSAP team for their incredible YouTube tutorials, documentation, and CodePen showcases. 
 Their [carousel gallery](https://demos.gsap.com/demo/infinite-card-slider/) was also a huge inspiration for this build. <br> 
 Behance poster: https://www.behance.net/gallery/130683597/Semihalf-rebranding/modules/740259299?utm_source=Pinterest&utm_medium=organic <br>
-Procreate pixel brush tutorial: https://www.youtube.com/watch?v=tPQTGC5-_Is&list=PLDcc58dVCf2Y <br>
+Procreate pixel brush tutorial: https://youtu.be/tPQTGC5-_Is?si=j5EPtUgtohCvgjIl <br>
 Scroll Trigger Inspiration: https://pin.it/5xk5W7IJE
 
 ## License
